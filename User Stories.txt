@@ -47,7 +47,7 @@ Priority 5
 
 4. Phone a friend
 
-After n snoozes, the app is automatically going to call a friend
+After a user specified number of snoozes occurs, the app is automatically going to call a friend
 Priority 5
 
 5. Store
