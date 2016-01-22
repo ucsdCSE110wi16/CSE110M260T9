@@ -31,7 +31,7 @@ Priority 10
 App can be set so that the alarm is only turned off via scanning a QR Code
 Priority 2
 
-Have only one QR Code for the app that is capable of turning of the alarm.
+Have only one QR Code for the app that is capable of turning off the alarm.
 Priority 4
 
 3. GPS
