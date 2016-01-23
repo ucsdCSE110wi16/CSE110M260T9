@@ -9,16 +9,15 @@ activities for basic functionality.
 Our tentative schedule is as follows:
 
 Week 4-5
-A user will be able to set alarm to ring at a specified time 
-Priority 1: 1-2 Weeks
+Note: These 3 tasks below will be done by subteams within our group. If each subgroup finishes each task in parallel, we will finish the MVP by week 5.
+A user will be able to set alarm to ring (make noise) at a specified time 
+Priority 1: 1-2 Weeks 
 App can be set so that the alarm is only turned off via scanning a QR Code
-Priority 2 1-2 Weeks
+Priority 2 1-2 Weeks 
 The user should be able to set their house location.
 Priority 3 1-2 Weeks
 
 Week 6
-An alarm will make noise to wake the user
-Priority 2: 1-2 days
 A user will be able to snooze an alarm
 Priority 2: 1 day
 A user will only have a finite number of snoozes
