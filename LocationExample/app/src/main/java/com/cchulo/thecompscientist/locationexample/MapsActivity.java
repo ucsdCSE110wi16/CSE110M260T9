@@ -1,3 +1,14 @@
+/*=================================================================================================
+Created By: Carlos Chulo
+Email: thecompscientist.dev@gmail.com
+
+This app is an example of storing a user's location.
+
+Sources of Help:
+-Tutorial from http://blog.teamtreehouse.com/beginners-guide-location-android
+-Google Android API Manual
+ ================================================================================================*/
+
 package com.cchulo.thecompscientist.locationexample;
 
 import android.Manifest;
@@ -26,30 +37,37 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+//This class will be used to set the location of the user
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
 
+    //private variable used to display the map
     private GoogleMap mMap;
 
+    //private reference to access GoogleApi for location services
     private GoogleApiClient mGoogleApiClient;
 
+    //part of the teamtreehouse tutorial, may not be needed...
     public static final String TAG = MapsActivity.class.getSimpleName();
 
+    //Timeout set for retrieving location
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
+    //reference to location request
     private LocationRequest mLocationRequest;
 
+    //flag to determine if we are setting a location...
     private boolean isSettingLocation;
 
-    TextView textLocation;
+    //References to design widgets/components
+    private TextView textLocation;
+    private Button buttonYes;
+    private Button buttonNo;
 
-    Button buttonYes;
-
-    Button buttonNo;
-
-    LatLng latLng;
+    //private variable to store location
+    private LatLng latLng;
 
 
     @Override
@@ -58,21 +76,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         setContentView(R.layout.activity_maps);
 
+        //get references to all the components
         textLocation = (TextView) findViewById(R.id.textNewLocation);
-
         buttonYes = (Button) findViewById(R.id.buttonYes);
-
         buttonNo = (Button) findViewById(R.id.buttonNo);
 
+        //get reference to the intent that led us to this map...
         Intent intent = getIntent();
 
-        isSettingLocation = intent.getBooleanExtra(MainActivity.flag, false);
-        latLng = intent.getByteExtra("Location", 0);
+        //determine if we are setting a new location
+        isSettingLocation = intent.getBooleanExtra(MainActivity.NEW_LOCATION, false);
 
+        //if we are not....
         if(!isSettingLocation){
+
+            //we will hide all unnecessary components
             textLocation.setVisibility(View.GONE);
             buttonYes.setVisibility(View.GONE);
             buttonNo.setVisibility(View.GONE);
+            latLng = MainActivity.convertStringToLatLng(intent.getStringExtra("Location"));
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -133,7 +155,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Location services connected.");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -146,7 +171,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if(location == null){
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
         } else {
             handleNewLocation(location);
         }
@@ -199,8 +225,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void buttonYes(View v){
 
         Intent returnIntent = new Intent(this, MainActivity.class);
-        returnIntent.putExtra("Location", latLng);
-        setResult(1, getIntent());
+        returnIntent.putExtra("Location", String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
+        setResult(1, returnIntent);
         finish();
     }
 
