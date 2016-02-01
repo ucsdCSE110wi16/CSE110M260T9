@@ -41,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putExtra(flag, true);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == 1){
+            textDisplay.setText("Location set");
+        }
     }
 }

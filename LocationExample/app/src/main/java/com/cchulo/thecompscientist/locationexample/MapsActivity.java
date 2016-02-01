@@ -11,6 +11,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,20 +36,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient mGoogleApiClient;
 
     public static final String TAG = MapsActivity.class.getSimpleName();
+
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private LocationRequest mLocationRequest;
 
     private boolean isSettingLocation;
 
+    TextView textLocation;
+
+    Button buttonYes;
+
+    Button buttonNo;
+
+    LatLng latLng;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_maps);
+
+        textLocation = (TextView) findViewById(R.id.textNewLocation);
+
+        buttonYes = (Button) findViewById(R.id.buttonYes);
+
+        buttonNo = (Button) findViewById(R.id.buttonNo);
 
         Intent intent = getIntent();
 
         isSettingLocation = intent.getBooleanExtra(MainActivity.flag, false);
+        latLng = intent.getByteExtra("Location", 0);
+
+        if(!isSettingLocation){
+            textLocation.setVisibility(View.GONE);
+            buttonYes.setVisibility(View.GONE);
+            buttonNo.setVisibility(View.GONE);
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -151,7 +178,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double currLat = location.getLatitude();
         double currLongt = location.getLongitude();
 
-        LatLng latLng = new LatLng(currLat, currLongt);
+        if(isSettingLocation)
+            latLng = new LatLng(currLat, currLongt);
 
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
@@ -163,6 +191,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
+
         handleNewLocation(location);
+
+    }
+
+    public void buttonYes(View v){
+
+        Intent returnIntent = new Intent(this, MainActivity.class);
+        returnIntent.putExtra("Location", latLng);
+        setResult(1, getIntent());
+        finish();
+    }
+
+    public void buttonNo(View v){
+        finish();
     }
 }
