@@ -1,52 +1,86 @@
 package nid.alarm;
 
+import java.util.Calendar;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class MainActivity extends AppCompatActivity {
-
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+public class MainActivity extends FragmentActivity{
+    private static int timeHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    private static int timeMinute = Calendar.getInstance().get(Calendar.MINUTE);
+    TextView textView1;
+    private static TextView textView2;
+    public static TextView getTextView2() {
+        return textView2;
+    }
+    AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.mylayout);
+        textView1 = (TextView)findViewById(R.id.msg1);
+        textView1.setText(timeHour + ":" + timeMinute);
+        textView2 = (TextView)findViewById(R.id.msg2);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+
+        OnClickListener listener1 = new OnClickListener() {
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                textView2.setText("");
+                Bundle bundle = new Bundle();
+                bundle.putInt(MyConstants.HOUR, timeHour);
+                bundle.putInt(MyConstants.MINUTE, timeMinute);
+                MyDialogFragment fragment = new MyDialogFragment(new MyHandler());
+                fragment.setArguments(bundle);
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(fragment, MyConstants.TIME_PICKER);
+                transaction.commit();
             }
-        });
+        };
+
+        Button btn1 = (Button)findViewById(R.id.button1);
+        btn1.setOnClickListener(listener1);
+        OnClickListener listener2 = new OnClickListener() {
+            public void onClick(View view) {
+                textView2.setText("");
+                cancelAlarm();
+            }
+        };
+        Button btn2 = (Button)findViewById(R.id.button2);
+        btn2.setOnClickListener(listener2);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    class MyHandler extends Handler {
+        @Override
+        public void handleMessage (Message msg){
+            Bundle bundle = msg.getData();
+            timeHour = bundle.getInt(MyConstants.HOUR);
+            timeMinute = bundle.getInt(MyConstants.MINUTE);
+            textView1.setText(timeHour + ":" + timeMinute);
+            setAlarm();
         }
-
-        return super.onOptionsItemSelected(item);
+    }
+    private void setAlarm(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, timeHour);
+        calendar.set(Calendar.MINUTE, timeMinute);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+    private void cancelAlarm() {
+        if (alarmManager!= null) {
+            alarmManager.cancel(pendingIntent);
+        }
     }
 }
