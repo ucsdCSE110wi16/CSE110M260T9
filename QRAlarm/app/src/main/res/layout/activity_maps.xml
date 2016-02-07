@@ -8,7 +8,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.cchulo.thecompscientist.locationexample.MapsActivity"/>
+        tools:context="cse110m260t9.qralarm.MapsActivity"/>
 
     <TextView
         android:layout_width="wrap_content"

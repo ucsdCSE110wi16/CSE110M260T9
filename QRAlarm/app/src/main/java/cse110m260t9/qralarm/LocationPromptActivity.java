@@ -52,10 +52,10 @@ public class LocationPromptActivity extends AppCompatActivity {
         if(location == null){
 
             //we let the user know
-            textDisplay.setText("Location not set");
+            //textDisplay.setText("Location not set");
 
             //disable use of current location
-            buttonCurrLocation.setEnabled(false);
+            //buttonCurrLocation.setEnabled(false);
 
         }
     }

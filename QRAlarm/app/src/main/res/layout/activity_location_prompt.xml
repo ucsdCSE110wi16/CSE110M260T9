@@ -12,18 +12,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location Status Here!"
+        android:text="@string/textViewLocationDisplay"
         android:id="@+id/textViewLocationDisplay"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Current Set Location"
+        android:text="@string/buttonShowLocation"
         android:id="@+id/buttonShowLocation"
         android:layout_below="@+id/textViewLocationDisplay"
         android:layout_centerHorizontal="true"
@@ -33,10 +33,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set New Location"
+        android:text="@string/buttonNewLocation"
         android:id="@+id/buttonNewLocation"
         android:layout_below="@+id/buttonShowLocation"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="95dp"
         android:onClick="buttonSetNewLocation" />
+
 </RelativeLayout>
