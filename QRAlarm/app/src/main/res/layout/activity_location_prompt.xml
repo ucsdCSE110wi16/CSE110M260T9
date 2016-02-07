@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="cse110m260t9.qralarm.LocationPromptActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location Status Here!"
+        android:id="@+id/textViewLocationDisplay"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Current Set Location"
+        android:id="@+id/buttonShowLocation"
+        android:layout_below="@+id/textViewLocationDisplay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="106dp"
+        android:onClick="buttonCurrentLocation" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set New Location"
+        android:id="@+id/buttonNewLocation"
+        android:layout_below="@+id/buttonShowLocation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="95dp"
+        android:onClick="buttonSetNewLocation" />
+</RelativeLayout>
