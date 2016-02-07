@@ -42,7 +42,7 @@ public class LocationPromptActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_location_prompt);
 
         //store references of design widgets/components
         textDisplay = (TextView) findViewById(R.id.textViewLocationDisplay);
@@ -52,10 +52,10 @@ public class LocationPromptActivity extends AppCompatActivity {
         if(location == null){
 
             //we let the user know
-            //textDisplay.setText("Location not set");
+            textDisplay.setText("Location not set");
 
             //disable use of current location
-            //buttonCurrLocation.setEnabled(false);
+            buttonCurrLocation.setEnabled(false);
 
         }
     }
