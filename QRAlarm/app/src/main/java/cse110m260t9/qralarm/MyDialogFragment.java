@@ -3,6 +3,7 @@ package cse110m260t9.qralarm;
 /**
  * Created by Nid on 1/25/16.
  */
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -35,6 +36,6 @@ public class MyDialogFragment extends DialogFragment {
                 handler.sendMessage(msg);
             }
         };
-        return new TimePickerDialog(getActivity(), listener, timeHour, timeMinute, false);
+        return new TimePickerDialog(getActivity(), AlertDialog.THEME_HOLO_DARK, listener, timeHour, timeMinute, false);
     }
 }
