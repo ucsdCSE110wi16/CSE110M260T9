@@ -10,7 +10,7 @@ ex: 1 is highest, 10 is lowest
 The priorities assigned denote how important a task is for the entire application
 
 1. Alarm System
-
+---
 As a user that wants an alarm
 I want to be able to set an alarm at a specific time
 so that I can wake up at that particular time I set
@@ -74,6 +74,7 @@ Priority 10
 	- This means that there is a limit of 23-24 alarms for every day that could ever be set on any given day.
 
 2. QR Code
+---
 
 As a user that wants an alarm
 I want to be able to turn the alarm off via QR Code
@@ -96,6 +97,7 @@ Priority 4
 	by this app
 
 3. GPS
+---
 
 As a user that wants an alarm
 I want to be able to set my house location within the app
@@ -143,6 +145,7 @@ Priority 5
 	- The app calling a friend feature will be unaffected.
 
 4. Phone a friend
+---
 
 As a user that wants an alarm
 I want the app to call a friend after some number of snoozes
@@ -156,6 +159,7 @@ Priority 5
 	to trigger the "call friend" event, assuming it is set.
 
 5. Store
+---
 
 As the customer that wants the alarm app made
 I want snooze credits to be generated when the user wakes up on time
