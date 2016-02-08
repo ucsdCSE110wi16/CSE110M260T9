@@ -23,7 +23,7 @@ public class MainActivity extends FragmentActivity{
         return alarmRingText;
     }
     AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
+    private PendingIntent pendingAlarmIntent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity{
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+        pendingAlarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
 
         OnClickListener listener1 = new OnClickListener() {
             public void onClick(View view) {
@@ -76,13 +76,16 @@ public class MainActivity extends FragmentActivity{
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, timeHour);
         calendar.set(Calendar.MINUTE, timeMinute);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        //set the alarm to go off at the set time. runs pendingAlarmIntent
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                pendingAlarmIntent);
     }
 
     private void cancelAlarm() {
         if (alarmManager!= null) {
             //TODO: make the music stop. currently the text goes away, but not the music
-            alarmManager.cancel(pendingIntent);
+            alarmManager.cancel(pendingAlarmIntent);
         }
     }
 }
