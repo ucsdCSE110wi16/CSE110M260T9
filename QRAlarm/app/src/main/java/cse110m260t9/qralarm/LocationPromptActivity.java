@@ -28,6 +28,11 @@ public class LocationPromptActivity extends AppCompatActivity {
     public final static String NEW_LOCATION = "New Location";
     public final static String CURR_LOCATION = "Location";
 
+    public final static String LOCATION_NOT_SET = "Location not set";
+    public final static String LOCATION_SET = "Location set";
+
+    public final static int RESULT_CODE = 0x20;
+
     //private variable to store location
     private LatLng location;
 
@@ -52,7 +57,7 @@ public class LocationPromptActivity extends AppCompatActivity {
         if(location == null){
 
             //we let the user know
-            textDisplay.setText("Location not set");
+            textDisplay.setText(LOCATION_NOT_SET);
 
             //disable use of current location
             buttonCurrLocation.setEnabled(false);
@@ -70,7 +75,7 @@ public class LocationPromptActivity extends AppCompatActivity {
         intent.putExtra(NEW_LOCATION, false);
 
         //raise a flag that we are sending a string location
-        intent.putExtra("Location", stringLocation);
+        intent.putExtra(CURR_LOCATION, stringLocation);
 
         //... and off we go into maps!
         startActivity(intent);
@@ -86,7 +91,7 @@ public class LocationPromptActivity extends AppCompatActivity {
         intent.putExtra(NEW_LOCATION, true);
 
         //...and off we go into maps! But expecting a result back....
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, RESULT_CODE);
     }
 
     @Override
@@ -95,13 +100,13 @@ public class LocationPromptActivity extends AppCompatActivity {
 
         //when we return from maps when we set a new location, we check to see if it returned
         //a code of 1...
-        if(resultCode == 1){
+        if(resultCode == RESULT_CODE){
 
             //if so it means a new location was set!
-            textDisplay.setText("Location Set");
+            textDisplay.setText(LOCATION_SET);
 
             //store the string of this new location
-            stringLocation = data.getStringExtra("Location");
+            stringLocation = data.getStringExtra(CURR_LOCATION);
 
             //set the location
             location = convertStringToLatLng(stringLocation);
@@ -122,4 +127,3 @@ public class LocationPromptActivity extends AppCompatActivity {
         return latLng;
     }
 }
-

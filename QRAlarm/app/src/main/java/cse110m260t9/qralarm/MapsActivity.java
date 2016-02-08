@@ -16,8 +16,6 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -225,7 +223,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent returnIntent = new Intent(this, MainActivity.class);
         returnIntent.putExtra("Location", String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
-        setResult(1, returnIntent);
+        setResult(LocationPromptActivity.RESULT_CODE, returnIntent);
         finish();
     }
 
