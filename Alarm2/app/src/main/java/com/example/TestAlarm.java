@@ -1,8 +1,10 @@
 package com.example;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+
 import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,7 +41,7 @@ public class TestAlarm extends Activity {
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            return new TimePickerDialog(getActivity(), AlertDialog.THEME_HOLO_DARK, this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
 
