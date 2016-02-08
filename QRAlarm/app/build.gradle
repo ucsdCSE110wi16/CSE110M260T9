@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "cse110m260t9.qralarm"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
