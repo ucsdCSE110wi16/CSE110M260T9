@@ -2,6 +2,7 @@ package cse110m260t9.qralarm;
 
 import java.util.Calendar;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +15,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+
+
+
+
 public class MainActivity extends FragmentActivity{
+
     private static int timeHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     private static int timeMinute = Calendar.getInstance().get(Calendar.MINUTE);
-    TextView timeText;
+    private TextView timeText;
     private static TextView alarmRingText;
     public static TextView getAlarmRingText() {
         return alarmRingText;
     }
-    AlarmManager alarmManager;
+    private AlarmManager alarmManager;
     private PendingIntent pendingAlarmIntent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,20 +42,11 @@ public class MainActivity extends FragmentActivity{
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        pendingAlarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+        pendingAlarmIntent = PendingIntent.getBroadcast(MainActivity.this, AlertDialog.THEME_HOLO_DARK, myIntent, 0);
 
         OnClickListener listener1 = new OnClickListener() {
             public void onClick(View view) {
-                alarmRingText.setText("");
-                Bundle bundle = new Bundle();
-                bundle.putInt(MyConstants.HOUR, timeHour);
-                bundle.putInt(MyConstants.MINUTE, timeMinute);
-                MyDialogFragment fragment = new MyDialogFragment(new SetAlarmHandler());
-                fragment.setArguments(bundle);
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.add(fragment, MyConstants.TIME_PICKER);
-                transaction.commit();
+                saveAlarm();
             }
         };
 
@@ -87,5 +86,19 @@ public class MainActivity extends FragmentActivity{
             //TODO: make the music stop. currently the text goes away, but not the music
             alarmManager.cancel(pendingAlarmIntent);
         }
+    }
+
+    // Logic on start button
+    public void saveAlarm() {
+        alarmRingText.setText("");
+        Bundle bundle = new Bundle();
+        bundle.putInt(MyConstants.HOUR, timeHour);
+        bundle.putInt(MyConstants.MINUTE, timeMinute);
+        MyDialogFragment fragment = new MyDialogFragment(new SetAlarmHandler());
+        fragment.setArguments(bundle);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(fragment, MyConstants.TIME_PICKER);
+        transaction.commit();
     }
 }
