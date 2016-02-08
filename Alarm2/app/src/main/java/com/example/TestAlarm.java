@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -20,6 +21,10 @@ import nid.alarm.R;
 
 public class TestAlarm extends Activity {
 
+
+
+    public final static String dateLabel = "Alarm Date: ";
+    public final static String timeLabel = "Alarm Time: ";
     // Main class methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class TestAlarm extends Activity {
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
+            // That deprecated second parameter makes it look cool!
             return new TimePickerDialog(getActivity(), AlertDialog.THEME_HOLO_DARK, this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
@@ -78,11 +84,13 @@ public class TestAlarm extends Activity {
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            // That deprecated second parameter makes it look cool!
+            return new DatePickerDialog(getActivity(), AlertDialog.THEME_HOLO_DARK, this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
+             //TextView label = (TextView) view.findViewById(R.id.alarmDateLabel);
+             //label.setText(dateLabel + month + "/" + day + "/" + year);
         }
     }
 
