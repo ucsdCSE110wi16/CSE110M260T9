@@ -37,7 +37,8 @@ public class MainActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timeText = (TextView)findViewById(R.id.alarmTimeLabel);
-        timeText.setText(timeHour + ":" + timeMinute);
+        String timeLabelText = cleanTime(timeHour,timeMinute);
+        timeText.setText(timeLabelText);
         alarmRingText = (TextView)findViewById(R.id.alarmMessageLabel);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -100,5 +101,12 @@ public class MainActivity extends FragmentActivity{
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(fragment, MyConstants.TIME_PICKER);
         transaction.commit();
+    }
+
+    private String cleanTime(int hour, int min) {
+        int resHour = hour % 12;
+        resHour = resHour == 0 ? 12 : resHour;
+        String minute = min / 10 == 0 ? "0" + min : "" +min;
+        return resHour + ":" + minute;
     }
 }
