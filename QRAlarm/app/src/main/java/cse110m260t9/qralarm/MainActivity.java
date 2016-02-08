@@ -28,9 +28,9 @@ public class MainActivity extends FragmentActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        timeText = (TextView)findViewById(R.id.msg1);
+        timeText = (TextView)findViewById(R.id.alarmTimeLabel);
         timeText.setText(timeHour + ":" + timeMinute);
-        alarmRingText = (TextView)findViewById(R.id.msg2);
+        alarmRingText = (TextView)findViewById(R.id.alarmMessageLabel);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
