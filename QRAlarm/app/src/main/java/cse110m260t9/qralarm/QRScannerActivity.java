@@ -3,6 +3,9 @@ package cse110m260t9.qralarm;
 /**
  * Created by itstehkman on 2/7/16.
  */
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,11 +29,18 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
     private ZXingScannerView mScannerView;
     private String LOG_TAG = "QRScannerActivity";
 
+    private Ringtone ringtone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);                // Set the scanner view as the content view
+
+        //initiate ringtone
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(this, uri);
+        ringtone.play();
     }
 
     @Override
@@ -53,17 +63,18 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.v(LOG_TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
         String correctQRCode = "http://www.google.com";
-        //Intent intent = new Intent(this, poop.class);
         if(rawResult.getText().equals(correctQRCode)) {
-            //startActivity(intent);
 
-            //TODO: replace this code with turning off the alarm
             Context context = getApplicationContext();
             CharSequence text = "Correct! Scanned " + correctQRCode;
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+
+            //TODO: go back to Alarm Activity
+            ringtone.stop();
+            startActivity(new Intent(this, MainActivity.class));
         }
         else {
             Context context = getApplicationContext();
@@ -77,4 +88,5 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
     }
+
 }

@@ -56,9 +56,10 @@
         //TODO: DON'T HARDCODE THE LABEL, MAKE IT A RESOURCE
         <activity
             android:name=".QRScannerActivity"
-            android:label="QRScannerActivity">
-
+            android:label="QRScannerActivity"
+            android:theme="@style/Theme.AppCompat">
         </activity>
+
         <receiver android:name=".AlarmReceiver"/>
     </application>
 
