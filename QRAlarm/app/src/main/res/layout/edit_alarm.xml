@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditAlarm"
+    style="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+    <TimePicker
+        android:id="@+id/alarmTimePicker"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/llhDotw"
+        android:layout_below="@+id/alarmTimePicker"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmSunday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmSunday"
+            android:textOn="@string/toggleTextAlarmSunday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmMonday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmMonday"
+            android:textOn="@string/toggleTextAlarmMonday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmTuesday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmTuesday"
+            android:textOn="@string/toggleTextAlarmTuesday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmWednesday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmWednesday"
+            android:textOn="@string/toggleTextAlarmWednesday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmThursday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmThursday"
+            android:textOn="@string/toggleTextAlarmThursday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmFriday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmFriday"
+            android:textOn="@string/toggleTextAlarmFriday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <ToggleButton
+            android:background="@drawable/btn_toggle_bg_dotw"
+            android:clickable="true"
+            android:enabled="true"
+            android:id="@+id/toggleButtonAlarmSaturday"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:textOff="@string/toggleTextAlarmSaturday"
+            android:textOn="@string/toggleTextAlarmSaturday"
+            android:textStyle="normal"
+            android:typeface="normal" />
+    </LinearLayout>
+
+    <CheckBox
+        android:clickable="true"
+        android:enabled="true"
+        android:id="@+id/alarmCheckRepeatWeekly"
+        android:layout_below="@+id/llhDotw"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/alarmCheckRepeatWeeklyText"
+        android:textStyle="normal"
+        android:typeface="normal" />
+
+    <Spinner
+        android:clickable="true"
+        android:id="@+id/alarmRingtoneSpinner"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/alarmCheckRepeatWeekly"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <EditText
+        android:enabled="true"
+        android:hint="@string/alarmTextLabelHint"
+        android:id="@+id/alarmTextLabel"
+        android:inputType="text"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/alarmRingtoneSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingTop="10sp" />
+
+    <LinearLayout
+        android:id="@+id/llhExitButtons"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:enabled="true"
+            android:id="@+id/cancelButtonAlarm"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:onClick="cancelAlarm"
+            android:text="@string/cancelButtonTextAlarm"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textStyle="normal"
+            android:typeface="normal" />
+
+        <Button
+            android:enabled="true"
+            android:id="@+id/saveButtonAlarm"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:onClick="saveAlarm"
+            android:text="@string/saveButtonTextAlarm"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textStyle="normal"
+            android:typeface="normal" />
+    </LinearLayout>
+
+</RelativeLayout>

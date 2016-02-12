@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">QR Alarm</string>
+    <string name="newAlarmButtonText">New Alarm</string>
+    <string name="cancelButtonTextAlarm">Cancel</string>
+    <string name="saveButtonTextAlarm">Save</string>
+    <string name="toggleTextAlarmSunday">S</string>
+    <string name="toggleTextAlarmMonday">M</string>
+    <string name="toggleTextAlarmTuesday">T</string>
+    <string name="toggleTextAlarmWednesday">W</string>
+    <string name="toggleTextAlarmThursday">T</string>
+    <string name="toggleTextAlarmFriday">F</string>
+    <string name="toggleTextAlarmSaturday">S</string>
+    <string name="alarmCheckRepeatWeeklyText">Repeat Weekly</string>
+    <string name="alarmTextLabelHint">Name</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
     <string name="buttonNewLocation">Set New Location</string>

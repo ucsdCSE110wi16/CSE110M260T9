@@ -13,8 +13,6 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
-        MainActivity.getAlarmRingText().setText("Enough Rest. Do Work Now!");
-
         //TODO: review this section. this is a sketch way to start an activity
         //turn on QRScannerActivity
         Intent scannerIntent = new Intent(context, QRScannerActivity.class);
