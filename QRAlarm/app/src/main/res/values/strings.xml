@@ -17,4 +17,6 @@
     <string name="buttonNewLocation">Set New Location</string>
     <string name="buttonShowLocation">Show Current Set Location</string>
     <string name="textViewLocationDisplay">Location Status Here!</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
