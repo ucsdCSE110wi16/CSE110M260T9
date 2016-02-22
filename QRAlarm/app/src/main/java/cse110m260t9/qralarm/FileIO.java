@@ -19,6 +19,7 @@ public class FileIO {
             FileOutputStream fileOutStream = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
             // Dump the string to a file
             fileOutStream.write(stringToSave.getBytes());
+            System.out.println("Trying to save: " + stringToSave + " to file: " + fileName);
             // Close the stream
             fileOutStream.close();
         } catch (FileNotFoundException e) {

@@ -19,4 +19,30 @@
         android:textColor="#ffffff"
         android:textStyle="normal"
         android:typeface="normal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test File Saving"
+        android:id="@+id/fileSaveButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="testSave" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test File Loading"
+        android:id="@+id/fileLoadButton"
+        android:layout_above="@+id/fileSaveButton"
+        android:layout_alignParentStart="true"
+        android:onClick="testLoad" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fileText"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:text="poop" />
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -93,5 +94,14 @@ public class MainActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+    public void testSave(View v) {
+        EditText textField = (EditText)findViewById(R.id.fileText);
+        FileIO.saveString("text", textField.getText().toString(), this);
+    }
+    public void testLoad(View v) {
+        EditText textField = (EditText)findViewById(R.id.fileText);
+        textField.setText(FileIO.retrieveStringFromFile("text", this));
     }
 }
