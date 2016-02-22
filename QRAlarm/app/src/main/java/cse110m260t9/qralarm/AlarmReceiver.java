@@ -8,15 +8,36 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.PowerManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {
+    private static PowerManager.WakeLock wakeLock;
+
     @Override
     public void onReceive(final Context context, Intent intent) {
-        //TODO: review this section. this is a sketch way to start an activity
+        wakeLockAcquire(context);
+
         //turn on QRScannerActivity
         Intent scannerIntent = new Intent(context, QRScannerActivity.class);
         scannerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(scannerIntent);
+
+        wakeLockRelease();
     }
+
+    public static void wakeLockAcquire(Context ctx) {
+        if (wakeLock != null) wakeLock.release();
+
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK |
+                PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                PowerManager.ON_AFTER_RELEASE, "wakeLock");
+        wakeLock.acquire();
+    }
+
+    public static void wakeLockRelease() {
+        if (wakeLock != null) wakeLock.release(); wakeLock = null;
+    }
+
 }
