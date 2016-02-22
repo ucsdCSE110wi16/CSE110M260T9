@@ -60,6 +60,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
                 android:layout_width="match_parent" />
 
             <LinearLayout
