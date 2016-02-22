@@ -12,10 +12,46 @@ import java.io.IOException;
  * This class provides a wrapper for the Android FileIO methods
  */
 public class FileIO {
+
+    // These are specific methods to save/load the user's home location to permanent storage
+
+    /**
+     * Function Name: writeLocationToFile()
+     * Description: Saves location to local file storage
+     * --- NOTE --- ctx will most likely by 'this' from a class that calls this function
+     * @param location
+     * @param ctx
+     */
+    public static void writeLocationToFile(String location, Context ctx) {
+        saveString(MyConstants.LOCATION_FILE, location, ctx);
+    }
+
+    /**
+     * Function Name: getLocationFromFile()
+     * Description: Loads location from local file storage and returns it as a string
+     * --- NOTE --- ctx will most likely by 'this' from a class that calls this function
+     * @param ctx
+     * @return
+     */
+    public static String getLocationFromFile(Context ctx) {
+        return retrieveStringFromFile(MyConstants.LOCATION_FILE, ctx);
+    }
+
+
+    // These are the generic methods to save/load any string to any file
+
+    /**
+     * Function Name: saveString()
+     * Description: Saves stringToSave to fileName
+     * --- NOTE --- ctx will most likely by 'this' from a class that calls this function
+     * @param fileName
+     * @param stringToSave
+     * @param ctx
+     */
     public static void saveString( String fileName, String stringToSave, Context ctx ) {
         try {
             // Create the FileOutputStream
-            // The contex mode private ensures this file should only be used by our app
+            // The context mode private ensures this file should only be used by our app
             FileOutputStream fileOutStream = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
             // Dump the string to a file
             fileOutStream.write(stringToSave.getBytes());
@@ -29,6 +65,14 @@ public class FileIO {
         }
     }
 
+    /**
+     * Function Name: retrieveStringFromFile()
+     * Description: This function returns the contents of fileName as a string
+     * --- NOTE --- ctx will most likely by 'this' from a class that calls this function
+     * @param fileName
+     * @param ctx
+     * @return
+     */
     public static String retrieveStringFromFile( String fileName, Context ctx ) {
         String retVal = "";
         try {
