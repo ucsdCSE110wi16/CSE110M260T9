@@ -53,6 +53,10 @@ Priority 3 2 Days</del>
 <del>Make the layout more structured for the new alarm<br>
 Priority 3 2 Days</del>
 
+<del>Location is now exposed and reachable from MainActivity via Nav Drawer menu.<br>
+LocationPromptAcitity is no longer needed<br>
+Priority 2 1 Day</del>
+
 Week 8
 ------
 Couple the user with QR Code via QR Code hash creation<br>
@@ -69,3 +73,7 @@ Priority 3 1 Days
 
 Snooze button<br>
 Priority 1 3 Days
+
+Add feature to alarm to check if there is a home location currently set, if so check to see if
+we are in proximity of that location.
+Priority 2 3 Days
