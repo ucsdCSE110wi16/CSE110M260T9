@@ -84,7 +84,5 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
 
 
     @Override
-    public void onBackPressed() {
-    }
-
+    public void onBackPressed() {}
 }
