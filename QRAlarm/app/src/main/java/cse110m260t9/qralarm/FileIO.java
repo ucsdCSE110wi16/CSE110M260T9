@@ -13,7 +13,19 @@ import java.io.IOException;
  */
 public class FileIO {
 
-    // These are specific methods to save/load the user's home location to permanent storage
+    // These are methods to save/load the user's QR Hash to permanent storage
+
+
+    public static void writeQRHashToFile(String qrHash, Context ctx) {
+        saveString(MyConstants.QR_HASH_FILE, qrHash, ctx);
+    }
+
+    public static String getQRHashFromFile(Context ctx) {
+        return retrieveStringFromFile(MyConstants.QR_HASH_FILE, ctx);
+    }
+
+    // These are methods to save/load the user's home location to permanent storage
+
 
     /**
      * Function Name: writeLocationToFile()
