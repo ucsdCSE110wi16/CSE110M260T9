@@ -168,6 +168,25 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //when we return from maps when we set a new location, we check to see if it returned
+        //a code of 1...
+        if(resultCode == MyConstants.RESULT_CODE){
+
+            //store the string of this new location
+            stringLocation = data.getStringExtra(MyConstants.CURR_LOCATION);
+
+            FileIO.writeLocationToFile(stringLocation, this);
+
+            //set the location
+            location = convertStringToLatLng(stringLocation);
+
+        }
+    }
+
     public void initNavDrawer(){
         mDrawerList = (ListView) findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -175,12 +194,14 @@ public class MainActivity extends AppCompatActivity {
 
         addDrawerItems();
 
+        stringLocation = FileIO.getLocationFromFile(this);
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (id == EOptions.E_OPTIONS_SHOW_HOME.getId()) {
-                    if(location != null){
+                    if(!stringLocation.isEmpty()){
 
                         //we make a new intent of going into Maps
                         Intent intent = new Intent(MainActivity.this, MapsActivity.class);
@@ -217,23 +238,6 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //when we return from maps when we set a new location, we check to see if it returned
-        //a code of 1...
-        if(resultCode == MyConstants.RESULT_CODE){
-
-            //store the string of this new location
-            stringLocation = data.getStringExtra(MyConstants.CURR_LOCATION);
-
-            //set the location
-            location = convertStringToLatLng(stringLocation);
-
-        }
     }
 
     //Helper function to help us set up our NavDrawer
