@@ -69,3 +69,7 @@ Priority 3 1 Days
 
 Snooze button<br>
 Priority 1 3 Days
+
+Add feature to alarm to check if there is a home location currently set, if so check to see if
+we are in proximity of that location.
+Priority 2 3 Days
