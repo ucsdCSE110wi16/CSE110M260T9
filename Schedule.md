@@ -53,6 +53,10 @@ Priority 3 2 Days</del>
 <del>Make the layout more structured for the new alarm<br>
 Priority 3 2 Days</del>
 
+<del>Location is now exposed and reachable from MainActivity via Nav Drawer menu.<br>
+LocationPromptAcitity is no longer needed<br>
+Priority 2 1 Day</del>
+
 Week 8
 ------
 Couple the user with QR Code via QR Code hash creation<br>
