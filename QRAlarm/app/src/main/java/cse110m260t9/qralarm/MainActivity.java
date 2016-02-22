@@ -181,9 +181,6 @@ public class MainActivity extends AppCompatActivity {
 
             FileIO.writeLocationToFile(stringLocation, this);
 
-            //set the location
-            location = convertStringToLatLng(stringLocation);
-
         }
     }
 
@@ -276,14 +273,4 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    //helper method to convert String to LatLng object
-    public static LatLng convertStringToLatLng(String string){
-
-        String[] newLocation = string.split(",");
-
-        LatLng latLng = new LatLng(Double.parseDouble(newLocation[0]),
-                Double.parseDouble(newLocation[1]));
-
-        return latLng;
-    }
 }

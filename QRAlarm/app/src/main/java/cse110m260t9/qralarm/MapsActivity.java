@@ -82,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
 
         //determine if we are setting a new location
-        isSettingLocation = intent.getBooleanExtra(LocationPromptActivity.NEW_LOCATION, false);
+        isSettingLocation = intent.getBooleanExtra(MyConstants.NEW_LOCATION, false);
 
         //if we are not....
         if(!isSettingLocation){
@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             textLocation.setVisibility(View.GONE);
             buttonYes.setVisibility(View.GONE);
             buttonNo.setVisibility(View.GONE);
-            latLng = LocationPromptActivity.convertStringToLatLng(intent.getStringExtra("Location"));
+            latLng = convertStringToLatLng(intent.getStringExtra("Location"));
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -223,11 +223,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent returnIntent = new Intent(this, MainActivity.class);
         returnIntent.putExtra("Location", String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
-        setResult(LocationPromptActivity.RESULT_CODE, returnIntent);
+        setResult(MyConstants.RESULT_CODE, returnIntent);
         finish();
     }
 
     public void buttonNo(View v){
         finish();
+    }
+
+    //helper method to convert String to LatLng object
+    public static LatLng convertStringToLatLng(String string){
+
+        String[] newLocation = string.split(",");
+
+        LatLng latLng = new LatLng(Double.parseDouble(newLocation[0]),
+                Double.parseDouble(newLocation[1]));
+
+        return latLng;
     }
 }

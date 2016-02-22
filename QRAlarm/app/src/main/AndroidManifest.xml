@@ -31,10 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:label="@string/app_name"
-            android:name=".LocationPromptActivity"
-            android:theme="@style/Theme.AppCompat" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
