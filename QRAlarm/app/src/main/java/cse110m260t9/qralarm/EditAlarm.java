@@ -41,5 +41,6 @@ public class EditAlarm extends AppCompatActivity {
                 this, 0, new Intent(this, AlarmReceiver.class), 0);
         AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, operation);
+        this.finish();
     }
 }
