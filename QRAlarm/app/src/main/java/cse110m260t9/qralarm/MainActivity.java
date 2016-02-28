@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(operation);
         Toast.makeText(MainActivity.this,
-                "Clear Alarms", Toast.LENGTH_SHORT).show();
+                "Cleared Alarms", Toast.LENGTH_SHORT).show();
     }
 
     @Override

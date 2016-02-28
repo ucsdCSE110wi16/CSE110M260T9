@@ -7,8 +7,13 @@ public abstract class MyConstants {
     public static final String HOUR = "time_hour";
     public static final String MINUTE = "time_minute";
     public static final String TIME_PICKER = "time_picker";
+
     public static final String LOCATION_FILE = "QRAlarm_Saved_Location_Info";
     public static final String QR_HASH_FILE = "QRAlarm_QR_Hash";
+    public static final String ALARM_FILE = "Alarm_File";
+
+
+
     public final static String NEW_LOCATION = "New Location";
     public final static String CURR_LOCATION = "Location";
     public final static String LOCATION_NOT_SET = "Location not set";
