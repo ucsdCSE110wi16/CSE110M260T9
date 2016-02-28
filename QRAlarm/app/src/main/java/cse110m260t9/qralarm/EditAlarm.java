@@ -36,11 +36,17 @@ public class EditAlarm extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, this.timePicker.getCurrentHour());
         calendar.set(Calendar.MINUTE, this.timePicker.getCurrentMinute());
+        System.out.println(calendar);
         long triggerAtMillis = calendar.getTimeInMillis();
         PendingIntent operation = PendingIntent.getBroadcast(
                 this, 0, new Intent(this, AlarmReceiver.class), 0);
         AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, operation);
+
+
+        // Return to the MainActivity
+        Intent returnIntent = new Intent(this, MainActivity.class);
+        setResult(MyConstants.NEW_ALARM_SUCCESSFULLY_SET, returnIntent);
         this.finish();
     }
 }

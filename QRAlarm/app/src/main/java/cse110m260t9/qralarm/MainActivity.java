@@ -47,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
     //freak out)
     private String stringLocation;
 
-    //private variable to store location
-    private LatLng location;
+
 
     public enum EOptions {
         E_OPTIONS_SET_HOME("Set Home Location", 0),
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newAlarm(View v) {
-        this.startActivity(new Intent(this, EditAlarm.class));
+        this.startActivityForResult(new Intent(this, EditAlarm.class), MyConstants.NEW_ALARM_ACTIVITY);
     }
 
     @Override
@@ -174,14 +173,18 @@ public class MainActivity extends AppCompatActivity {
 
         //when we return from maps when we set a new location, we check to see if it returned
         //a code of 1...
-        if(resultCode == MyConstants.RESULT_CODE){
-
-            //store the string of this new location
-            stringLocation = data.getStringExtra(MyConstants.CURR_LOCATION);
-
-            FileIO.writeLocationToFile(stringLocation, this);
-
+        switch (resultCode) {
+            case MyConstants.LOCATION_SUCCESSFULLY_SET:
+                //store the string of this new location
+                stringLocation = data.getStringExtra(MyConstants.CURR_LOCATION);
+                FileIO.writeLocationToFile(stringLocation, this);
+                break;
+            case MyConstants.NEW_ALARM_SUCCESSFULLY_SET:
+                Toast.makeText(MainActivity.this,
+                        MyConstants.ALARM_SAVED_STR, Toast.LENGTH_SHORT).show();
+                break;
         }
+        //System.out.println("Inside onActivityResult -- Result Code: " + resultCode);
     }
 
     public void initNavDrawer(){
@@ -226,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(MyConstants.NEW_LOCATION, true);
 
                     //...and off we go into maps! But expecting a result back....
-                    startActivityForResult(intent, MyConstants.RESULT_CODE);
+                    startActivityForResult(intent, MyConstants.LOCATION_SUCCESSFULLY_SET);
 
                 }
             }

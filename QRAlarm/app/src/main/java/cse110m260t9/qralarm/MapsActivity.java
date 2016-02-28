@@ -223,7 +223,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent returnIntent = new Intent(this, MainActivity.class);
         returnIntent.putExtra("Location", String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
-        setResult(MyConstants.RESULT_CODE, returnIntent);
+        setResult(MyConstants.LOCATION_SUCCESSFULLY_SET, returnIntent);
         finish();
     }
 
