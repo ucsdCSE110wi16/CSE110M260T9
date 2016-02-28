@@ -1,5 +1,8 @@
 package cse110m260t9.qralarm;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -125,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void newAlarm(View v) {
         this.startActivityForResult(new Intent(this, EditAlarm.class), MyConstants.NEW_ALARM_ACTIVITY);
+    }
+
+    public void clearAlarms(View v) {
+        PendingIntent operation = PendingIntent.getBroadcast(
+                this, 0, new Intent(this, AlarmReceiver.class), 0);
+        AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(operation);
+        Toast.makeText(MainActivity.this,
+                "Clear Alarms", Toast.LENGTH_SHORT).show();
     }
 
     @Override
