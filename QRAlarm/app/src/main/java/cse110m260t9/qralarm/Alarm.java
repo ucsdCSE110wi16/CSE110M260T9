@@ -66,8 +66,12 @@ public class Alarm implements Serializable{
         rv += " ]\n";
         String hours = String.format("%02d", alarmTime.get(alarmTime.HOUR_OF_DAY));
         String minutes = String.format("%02d",alarmTime.get(alarmTime.MINUTE) );
+        String year = String.format("%04d",alarmTime.get(alarmTime.YEAR));
+        String month = String.format("%02d",alarmTime.get(alarmTime.MONTH));
+        String day = String.format("%02d",alarmTime.get(alarmTime.DAY_OF_MONTH));
         rv += "Time: " + hours + ":" + minutes;
         rv += "\nRepeats: " + isRepeating;
+        rv += "\nDate: " + year + "/" + month + "/" + day;
         return rv;
     }
 

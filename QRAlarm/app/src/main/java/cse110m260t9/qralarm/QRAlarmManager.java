@@ -40,7 +40,7 @@ public class QRAlarmManager extends IntentService{
     }
 
     @Override public int onStartCommand(Intent intent, int flag, int startID) {
-
+        onHandleIntent(intent);
         return 0;
     }
 
