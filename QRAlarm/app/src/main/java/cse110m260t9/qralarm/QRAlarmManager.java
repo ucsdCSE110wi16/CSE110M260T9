@@ -79,8 +79,9 @@ public class QRAlarmManager extends IntentService{
             else
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
             _registerAlarm(ctx, alarmClone);
+            alarm.broadcastTimes.add(alarmClone.getTimeInMillis());
         }
-        AlarmIO.saveTestAlarm(this, alarm);
+        AlarmIO.saveAlarm(this, alarm);
 
     }
 

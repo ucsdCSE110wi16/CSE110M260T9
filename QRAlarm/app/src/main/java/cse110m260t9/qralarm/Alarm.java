@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class Alarm implements Serializable{
     // Fields
     public ArrayList<Integer> daysAlarmShouldFire;
-    private ArrayList<Integer> broadcastIDs;
+    public ArrayList<Long> broadcastTimes;
     public boolean isRepeating;
     public String name;
     public Calendar alarmTime;
@@ -44,6 +44,7 @@ public class Alarm implements Serializable{
         alarmTime = calendar;
         hour = alarmTime.get(alarmTime.HOUR_OF_DAY);
         minute = alarmTime.get(alarmTime.MINUTE);
+        broadcastTimes = new ArrayList<>();
     }
 
     public Alarm( Alarm alm ) {
@@ -105,9 +106,19 @@ public class Alarm implements Serializable{
         rv += "Time: " + hours + ":" + minutes;
         rv += "\nRepeats: " + isRepeating;
         rv += "\nDate Alarm was Set: " + year + "/" + month + "/" + day;
+        rv += "\n Condensed: " + getDateAndTimeSet();
         return rv;
     }
 
+    public String getDateAndTimeSet() {
+        String hours = String.format("%02d", alarmTime.get(alarmTime.HOUR_OF_DAY));
+        String minutes = String.format("%02d",alarmTime.get(alarmTime.MINUTE) );
+        String year = String.format("%04d",alarmTime.get(alarmTime.YEAR));
+        String month = String.format("%02d",alarmTime.get(alarmTime.MONTH));
+        String day = String.format("%02d",alarmTime.get(alarmTime.DAY_OF_MONTH));
+        String seconds = String.format("%02d", alarmTime.get(alarmTime.SECOND));
+        return year + "-" + month + "-" + day + "|" + hours + ":" + minutes + ":" + seconds;
+    }
     public byte[] getSerializedString() {
         byte[] rv = null;
         try {

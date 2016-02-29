@@ -12,13 +12,13 @@ import java.util.ArrayList;
  * Created by Michael on 2/28/2016.
  */
 public class AlarmIO {
-    public static String ALARMSDIR = "Alarms";
+    public static final String ALARMSDIR = "Alarms";
+    public static final String EXT = ".alm";
 
 
     public static File[] getAllAlarmFiles( Context ctx ) {
         File alarmDir = getAlarmsDir(ctx);
         return alarmDir.listFiles();
-
     }
 
     public static void deleteAllAlarms( Context ctx ) {
@@ -35,10 +35,10 @@ public class AlarmIO {
         return Alarm.fromSerializedString(bytes);
     }
 
-    public static void saveTestAlarm( Context ctx, Alarm alm ) {
+    public static void saveAlarm( Context ctx, Alarm alm ) {
         File alarmDir = getAlarmsDir(ctx);
-        File outFile = new File(alarmDir, "Test2.alarm");
-        FileOutputStream fos = null;
+        File outFile = new File(alarmDir, alm.getDateAndTimeSet() + EXT );
+        FileOutputStream fos;
         try {
             fos = new FileOutputStream(outFile);
             fos.write(alm.getSerializedString());
