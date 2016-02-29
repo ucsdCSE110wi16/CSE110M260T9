@@ -7,35 +7,36 @@ import java.util.ArrayList;
 /**
  * Created by Michael on 2/28/2016.
  */
-public class AlarmIO extends FileIO {
-    public static ArrayList<Integer> getAlarms( Context ctx ) {
+public class AlarmIO {
+    public static ArrayList<Long> getAlarms( Context ctx ) {
         // Read the raw string from file
         String alarmStr = FileIO.retrieveStringFromFile(MyConstants.ALARM_FILE, ctx);
         // Split the raw string by a comma
         String[] alarmArrRaw = alarmStr.split(",");
-        ArrayList<Integer> alarmArrMillis = new ArrayList<Integer>();
+        ArrayList<Long> alarmArrMillis = new ArrayList<Long>();
         // Populate alarmArrMillis from the read file
-        for (String w: alarmArrRaw) { alarmArrMillis.add(new Integer(w)); }
+        if(!alarmStr.equals(""))
+            for (String w: alarmArrRaw) { alarmArrMillis.add(new Long(w)); }
         return alarmArrMillis;
     }
 
-    public static void saveAlarm( int millis, Context ctx) {
-        ArrayList<Integer> alarmArrMillis = getAlarms(ctx);
-        alarmArrMillis.add(new Integer(millis));
+    public static void saveAlarm( long millis, Context ctx) {
+        ArrayList<Long> alarmArrMillis = getAlarms(ctx);
+        alarmArrMillis.add(new Long(millis));
         writeAlarm(alarmArrMillis, ctx);
     }
 
-    public static void deleteAlarm( int millis, Context ctx ) {
-        ArrayList<Integer> alarmArrMillis = getAlarms(ctx);
-        Integer intToDelete = new Integer(millis);
-        for(Integer i : alarmArrMillis) {
+    public static void deleteAlarm( long millis, Context ctx ) {
+        ArrayList<Long> alarmArrMillis = getAlarms(ctx);
+        Long intToDelete = new Long(millis);
+        for(Long i : alarmArrMillis) {
             if (i.equals(intToDelete))
                 alarmArrMillis.remove(i);
         }
         writeAlarm(alarmArrMillis, ctx);
     }
 
-    private static void writeAlarm( ArrayList<Integer> alarmList, Context ctx ) {
+    private static void writeAlarm( ArrayList<Long> alarmList, Context ctx ) {
         String stringToWrite = "";
         for(int i = 0; i < alarmList.size(); i++ ) {
             stringToWrite += alarmList.get(i);

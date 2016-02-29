@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -137,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.cancel(operation);
         Toast.makeText(MainActivity.this,
                 "Cleared Alarms", Toast.LENGTH_SHORT).show();
+    }
+
+    public void dumpAlarms(View v) {
+        EditText txt = (EditText)findViewById(R.id.testDisplay);
+        String acc = "";
+        for (Long i : AlarmIO.getAlarms(this)) {
+            acc += "| " + i.toString();
+        }
+        txt.setText(acc);
     }
 
     @Override

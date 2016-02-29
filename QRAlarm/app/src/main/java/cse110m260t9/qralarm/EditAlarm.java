@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TimePicker;
+import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EditAlarm extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class EditAlarm extends AppCompatActivity {
             this.ringtoneManager.setType(RingtoneManager.TYPE_ALARM);
         }
         this.timePicker = (TimePicker)this.findViewById(R.id.alarmTimePicker);
+        toggleTodaysButton();
     }
 
     public void cancelAlarm(View v) {
@@ -37,18 +40,70 @@ public class EditAlarm extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, this.timePicker.getCurrentHour());
         calendar.set(Calendar.MINUTE, this.timePicker.getCurrentMinute());
         System.out.println(calendar);
-        long triggerAtMillis = calendar.getTimeInMillis();
-        PendingIntent operation = PendingIntent.getBroadcast(
-                this, 0, new Intent(this, AlarmReceiver.class), 0);
-        AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, operation);
 
-        System.out.println( triggerAtMillis );
 
+        Alarm alarm = new Alarm(calendar, whichDays(), false);
+        alarm.registerAlarm(this);
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);
         setResult(MyConstants.NEW_ALARM_SUCCESSFULLY_SET, returnIntent);
         this.finish();
+    }
+
+    public void toggleTodaysButton() {
+        Calendar calendar = Calendar.getInstance();
+        ToggleButton button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+        switch (calendar.DAY_OF_WEEK) {
+            case Calendar.SUNDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.MONDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.TUESDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.WEDNESDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.THURSDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.FRIDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.SATURDAY:
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+        }
+        button.setChecked(true);
+    }
+
+    public ArrayList<Integer> whichDays() {
+        ArrayList<Integer> result = new ArrayList<>();
+        ToggleButton sunday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+        ToggleButton monday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmMonday);
+        ToggleButton tuesday   = (ToggleButton) findViewById(R.id.toggleButtonAlarmTuesday);
+        ToggleButton wednesday = (ToggleButton) findViewById(R.id.toggleButtonAlarmWednesday);
+        ToggleButton thursday  = (ToggleButton) findViewById(R.id.toggleButtonAlarmThursday);
+        ToggleButton friday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmFriday);
+        ToggleButton saturday  = (ToggleButton) findViewById(R.id.toggleButtonAlarmSaturday);
+
+        if(sunday.isChecked())
+            result.add(new Integer(Calendar.SUNDAY));
+        if(monday.isChecked())
+            result.add(new Integer(Calendar.MONDAY));
+        if(tuesday.isChecked())
+            result.add(new Integer(Calendar.TUESDAY));
+        if(wednesday.isChecked())
+            result.add(new Integer(Calendar.WEDNESDAY));
+        if(thursday.isChecked())
+            result.add(new Integer(Calendar.THURSDAY));
+        if(friday.isChecked())
+            result.add(new Integer(Calendar.FRIDAY));
+        if(saturday.isChecked())
+            result.add(new Integer(Calendar.SATURDAY));
+        return result;
     }
 }
