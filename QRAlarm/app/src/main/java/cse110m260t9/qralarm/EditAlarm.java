@@ -42,7 +42,7 @@ public class EditAlarm extends AppCompatActivity {
         System.out.println(calendar);
 
 
-        Alarm alarm = new Alarm(calendar, whichDays(), false);
+        Alarm alarm = new Alarm("", calendar, whichDays(), false);
         alarm.registerAlarm(this);
 
         // Return to the MainActivity
@@ -54,27 +54,30 @@ public class EditAlarm extends AppCompatActivity {
     public void toggleTodaysButton() {
         Calendar calendar = Calendar.getInstance();
         ToggleButton button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
-        switch (calendar.DAY_OF_WEEK) {
+        //System.out.println("Today is: " + calendar.get(calendar.DAY_OF_WEEK));
+        //System.out.println("Monday is: " + calendar.MONDAY);
+        //System.out.println(calendar);
+        switch (calendar.get(calendar.DAY_OF_WEEK)) {
             case Calendar.SUNDAY:
                 button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
                 break;
             case Calendar.MONDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmMonday);
                 break;
             case Calendar.TUESDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmTuesday);
                 break;
             case Calendar.WEDNESDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmWednesday);
                 break;
             case Calendar.THURSDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmThursday);
                 break;
             case Calendar.FRIDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmFriday);
                 break;
             case Calendar.SATURDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
+                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSaturday);
                 break;
         }
         button.setChecked(true);

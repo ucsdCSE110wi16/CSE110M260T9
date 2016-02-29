@@ -12,10 +12,20 @@ import java.util.Calendar;
  * Created by Michael on 2/28/2016.
  */
 public class Alarm {
+    // Fields
     private ArrayList<Integer> daysAlarmShouldFire;
     private boolean isRepeating;
     private Calendar alarmTime;
-    public Alarm( Calendar calendar, ArrayList<Integer> days, boolean shouldRepeat ) {
+    private String name;
+
+    /**
+     * Primary Constructor
+     * @param name <- The name of the alarm
+     * @param calendar <- The calendar holding the time at which the alarm should fire
+     * @param days <- An array list of Calendar Day Integers for when the alarm should fire
+     * @param shouldRepeat <-- Boolean value to determine whether the alarm repeats
+     */
+    public Alarm( String name, Calendar calendar, ArrayList<Integer> days, boolean shouldRepeat ) {
         daysAlarmShouldFire = days;
         isRepeating = shouldRepeat;
         alarmTime = calendar;
@@ -28,7 +38,8 @@ public class Alarm {
      * @param ctx
      */
     public void registerAlarm(Context ctx) {
-        int today = Calendar.getInstance().DAY_OF_WEEK;
+        Calendar instance = Calendar.getInstance();
+        int today = instance.get(instance.DAY_OF_WEEK);
         for(Integer day : daysAlarmShouldFire ) {
             Calendar alarmClone = (Calendar)alarmTime.clone();
             // If the alarm is set for today
