@@ -19,6 +19,7 @@ public class QRAlarmManager extends IntentService{
     private final int ALARM_BUFFER = 2000;
     public static final String ALARM_KEY = "QR_ALARM_MANAGER_ALARM_KEY";
     public static final String DELETE_ALARMS = "QR_ALARM_MANAGER_DELETE_ALL";
+    private byte[] lastAlarmSerial = null;
     public QRAlarmManager() {
         super("QRAlarmManager");
     }
@@ -36,6 +37,14 @@ public class QRAlarmManager extends IntentService{
         }
         if( intent.hasExtra(DELETE_ALARMS))
             _deleteAllAlarms(this);
+        if( intent.hasExtra("Testing Serial")) {
+            Alarm alarm = Alarm.fromSerializedString(lastAlarmSerial);
+            System.out.println("Testing Serialization");
+            System.out.println("Serialized String: " + lastAlarmSerial);
+            System.out.println("Reconstructed alarm: " + alarm);
+            _registerAlarm(this, alarm);
+        }
+
 
     }
 
@@ -70,6 +79,7 @@ public class QRAlarmManager extends IntentService{
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
             _registerAlarm(ctx, alarmClone);
         }
+        lastAlarmSerial = alarm.getSerializedString();
 
     }
 
@@ -108,6 +118,12 @@ public class QRAlarmManager extends IntentService{
     public static void registerAlarm(Context ctx, Alarm alarm ) {
         Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
         alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
+        ctx.startService(alarmManager);
+    }
+
+    public static void registerSavedAlarm(Context ctx ) {
+        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
+        alarmManager.putExtra("Testing Serial", true);
         ctx.startService(alarmManager);
     }
 

@@ -27,14 +27,24 @@
             android:textStyle="normal"
             android:typeface="normal" />
 
-        <!--Button
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dump Alarms"
             android:id="@+id/button"
             android:onClick="clearAlarms"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" /-->
+            android:layout_alignParentEnd="true"
+            android:enabled="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Test"
+            android:id="@+id/saveButton"
+            android:layout_alignTop="@+id/button"
+            android:layout_alignParentStart="true"
+            android:onClick="saveInFolder" />
 
     </RelativeLayout>
 

@@ -135,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
         QRAlarmManager.deleteAllAlarms(this);
     }
 
+    public void saveInFolder(View v ) {
+        QRAlarmManager.registerSavedAlarm(this);
+    }
+
 
     @Override
     public void onStart() {

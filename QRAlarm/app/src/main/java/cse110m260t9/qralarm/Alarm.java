@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +44,23 @@ public class Alarm implements Serializable{
         alarmTime = calendar;
         hour = alarmTime.get(alarmTime.HOUR_OF_DAY);
         minute = alarmTime.get(alarmTime.MINUTE);
+    }
+
+    public Alarm( Alarm alm ) {
+        this(alm.name, alm.alarmTime, alm.daysAlarmShouldFire, alm.isRepeating);
+    }
+
+    public static Alarm fromSerializedString( byte[] serializedAlarm ) {
+        try {
+            byte b[] = serializedAlarm;
+            ByteArrayInputStream bi = new ByteArrayInputStream(b);
+            ObjectInputStream si = new ObjectInputStream(bi);
+            Alarm alm  = (Alarm) si.readObject();
+            return alm;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     public boolean isAM() {
@@ -87,5 +108,18 @@ public class Alarm implements Serializable{
         return rv;
     }
 
-
+    public byte[] getSerializedString() {
+        byte[] rv = null;
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(this);
+            so.flush();
+            rv = bo.toByteArray();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println("Serialized String: " + rv);
+        return rv;
+    }
 }
