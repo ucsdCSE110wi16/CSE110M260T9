@@ -52,28 +52,16 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
         Log.v(LOG_TAG, rawResult.getText()); // Prints scan results
         Log.v(LOG_TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
-        String correctQRCode = "http://www.google.com";
-        if(rawResult.getText().equals(correctQRCode)) {
+        Context context = getApplicationContext();
+        CharSequence text = "Scanned QR Code";
+        int duration = Toast.LENGTH_SHORT;
 
-            Context context = getApplicationContext();
-            CharSequence text = "Correct! Scanned " + correctQRCode;
-            int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-            //TODO: go back to Alarm Activity
-            SnoozeChoice.ringtone.stop();
-            startActivity(new Intent(this, MainActivity.class));
-        }
-        else {
-            Context context = getApplicationContext();
-            CharSequence text = "Wrong QR Code, please try again";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
+        //go back to Alarm Activity
+        SnoozeChoice.ringtone.stop();
+        startActivity(new Intent(this, MainActivity.class));
 
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
