@@ -40,6 +40,7 @@ public class EditAlarm extends AppCompatActivity {
     public void saveAlarm(View v) {
 
         Alarm alarm = createAlarmFromUserInput(v);
+        System.out.println(alarm);
         alarm.registerAlarm(this);
 
         // Return to the MainActivity

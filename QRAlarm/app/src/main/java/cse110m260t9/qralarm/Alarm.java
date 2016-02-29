@@ -86,7 +86,6 @@ public class Alarm {
     @Override public String toString() {
         String rv = "Alarm name: " + this.name;
         rv += "\nDays: [ ";
-        Calendar instance = Calendar.getInstance();
         for(Integer day : daysAlarmShouldFire ) {
             switch (day) {
                 case 1: rv += "Sunday ";
@@ -107,7 +106,9 @@ public class Alarm {
             }
         }
         rv += " ]\n";
-        rv += "Time: "+alarmTime.get(alarmTime.HOUR_OF_DAY) + ":" +alarmTime.get(alarmTime.MINUTE);
+        String hours = String.format("%02d",alarmTime.get(alarmTime.HOUR_OF_DAY) );
+        String minutes = String.format("%02d",alarmTime.get(alarmTime.MINUTE) );
+        rv += "Time: " + hours + ":" + minutes;
         rv += "\nRepeats: " + isRepeating;
         return rv;
     }
