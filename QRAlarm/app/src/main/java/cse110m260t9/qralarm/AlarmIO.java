@@ -14,13 +14,21 @@ import java.util.ArrayList;
 public class AlarmIO {
     public static String ALARMSDIR = "Alarms";
 
-    public static void createAlarmsDir(Context ctx) {
+
+    public static File[] getAllAlarmFiles( Context ctx ) {
         File alarmDir = getAlarmsDir(ctx);
-        alarmDir.mkdirs();
+        return alarmDir.listFiles();
+
     }
 
+    public static void deleteAllAlarms( Context ctx ) {
+        System.out.println("Deleting files");
+        for(File f : getAllAlarmFiles(ctx)) {
+            System.out.println("Filename: " + f.getName());
+            f.delete();
+        }
+    }
     public static Alarm loadTestAlarm( Context ctx ) {
-        createAlarmsDir(ctx);
         File alarmDir = getAlarmsDir(ctx);
         File inFile = new File(alarmDir, "Test.alarm");
         byte[] bytes = FileIO.retrieveByteArrayFromFile( inFile, ctx);
@@ -28,9 +36,8 @@ public class AlarmIO {
     }
 
     public static void saveTestAlarm( Context ctx, Alarm alm ) {
-        createAlarmsDir(ctx);
         File alarmDir = getAlarmsDir(ctx);
-        File outFile = new File(alarmDir, "Test.alarm");
+        File outFile = new File(alarmDir, "Test2.alarm");
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(outFile);
@@ -44,8 +51,9 @@ public class AlarmIO {
 
     }
 
-
     private static File getAlarmsDir( Context ctx ) {
-        return new File(ctx.getFilesDir(), ALARMSDIR );
+        File alarmDir = new File(ctx.getFilesDir(), ALARMSDIR );
+        alarmDir.mkdirs();
+        return alarmDir;
     }
 }

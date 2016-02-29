@@ -38,11 +38,12 @@ public class QRAlarmManager extends IntentService{
         if( intent.hasExtra(DELETE_ALARMS))
             _deleteAllAlarms(this);
         if( intent.hasExtra("Testing Serial")) {
-            Alarm alarm = AlarmIO.loadTestAlarm(this);
-            System.out.println("Testing Serialization");
-            System.out.println("Serialized String: " + lastAlarmSerial);
-            System.out.println("Reconstructed alarm: " + alarm);
-            _registerAlarm(this, alarm);
+            //Alarm alarm = AlarmIO.loadTestAlarm(this);
+            //System.out.println("Testing Serialization");
+            //System.out.println("Serialized String: " + lastAlarmSerial);
+            //System.out.println("Reconstructed alarm: " + alarm);
+            //_registerAlarm(this, alarm);
+            AlarmIO.deleteAllAlarms(this);
         }
 
 
