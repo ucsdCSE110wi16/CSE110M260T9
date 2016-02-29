@@ -24,6 +24,7 @@ public class QRAlarmManager extends IntentService{
     }
 
     @Override public void onCreate() {
+        super.onCreate();
         alarmList = new ArrayList<>();
         broadCastIDs = new ArrayList<>();
     }
