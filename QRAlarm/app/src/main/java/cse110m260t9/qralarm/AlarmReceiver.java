@@ -19,9 +19,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         wakeLockAcquire(context);
 
         //turn on QRScannerActivity
-        Intent scannerIntent = new Intent(context, QRScannerActivity.class);
-        scannerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(scannerIntent);
+        Intent snoozeChoice = new Intent(context, SnoozeChoice.class);
+        snoozeChoice.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(snoozeChoice);
 
         wakeLockRelease();
     }

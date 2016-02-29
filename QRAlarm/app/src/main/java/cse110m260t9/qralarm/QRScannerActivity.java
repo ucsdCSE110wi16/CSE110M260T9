@@ -30,10 +30,7 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);                // Set the scanner view as the content view
 
-        //initiate ringtone
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        ringtone = RingtoneManager.getRingtone(this, uri);
-        ringtone.play();
+
     }
 
     @Override
@@ -66,7 +63,7 @@ public class QRScannerActivity extends AppCompatActivity implements ZXingScanner
             toast.show();
 
             //TODO: go back to Alarm Activity
-            ringtone.stop();
+            SnoozeChoice.ringtone.stop();
             startActivity(new Intent(this, MainActivity.class));
         }
         else {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:animateLayoutChanges="true"
+                tools:context=".MainActivity" >
+
+    <fragment
+        android:id="@+id/main_panel"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/side_panel"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        class="nid.myactivity.MainPanelFragment" />
+
+
+    <fragment
+        android:id="@+id/side_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        class="nid.myactivity.BottomPanelFragment" />
+
+
+
+</RelativeLayout>
