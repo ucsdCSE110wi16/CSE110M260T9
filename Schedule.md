@@ -59,21 +59,39 @@ Priority 2 1 Day</del>
 
 Week 8
 ------
-Couple the user with QR Code via QR Code hash creation<br>
-Priority 3 2 Days
+<del>Couple the user with QR Code via QR Code hash creation<br>
+Priority 3 2 Days</del> <b>[DEPRECATED]</b>
 
 Allow the user to print out the QR Code<br>
 Priority 3 2 Days
 
-Use internal storage to store the code, GPS location, and maybe the alarms<br>
+<del>Use internal storage to store the code, GPS location, and maybe the alarms<br>
+Priority 2 3 Days</del>
+
+<del>Make the UI colors more uniform (black and blue maybe)? No red or green pls<br>
+Priority 3 1 Days</del>
+
+<del>Snooze button<br>
+Priority 1 3 Days</del>
+
+Add feature to alarm to check if there is a home location currently set, if so check to see if
+we are in proximity of that location.
 Priority 2 3 Days
 
-Make the UI colors more uniform (black and blue maybe)? No red or green pls<br>
-Priority 3 1 Days
+Week 9
+------
+Allow the user to print out a QR Code<br>
+Priority 2 2 Days
 
-Snooze button<br>
+List of alarms on main page<br>
 Priority 1 3 Days
 
 Add feature to alarm to check if there is a home location currently set, if so check to see if
 we are in proximity of that location.
 Priority 2 3 Days
+
+Play normal alarm if not in house range<br>
+Priority 1 3 Days
+
+Get rid of the damn activity titles<br>
+Priority 3 1 Days
