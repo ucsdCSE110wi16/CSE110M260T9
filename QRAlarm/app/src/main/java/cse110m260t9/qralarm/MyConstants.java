@@ -13,7 +13,6 @@ public abstract class MyConstants {
     public static final String ALARM_FILE = "Alarm_File";
 
 
-
     public final static String NEW_LOCATION = "New Location";
     public final static String CURR_LOCATION = "Location";
     public final static String LOCATION_NOT_SET = "Location not set";

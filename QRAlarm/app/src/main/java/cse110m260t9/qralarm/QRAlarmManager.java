@@ -52,6 +52,7 @@ public class QRAlarmManager extends IntentService{
      */
     private void _registerAlarm(Context ctx, Alarm alarm) {
         Calendar instance = Calendar.getInstance();
+        alarmList.add(alarm);
         int today = instance.get(instance.DAY_OF_WEEK);
         for(Integer day : alarm.daysAlarmShouldFire ) {
             System.out.println("Day is: " + day);
@@ -95,6 +96,7 @@ public class QRAlarmManager extends IntentService{
                     "Cleared Alarms", Toast.LENGTH_SHORT).show();
         }
         broadCastIDs.clear();
+        alarmList.clear();
     }
 
     public static void deleteAllAlarms(Context ctx ) {
@@ -109,10 +111,10 @@ public class QRAlarmManager extends IntentService{
         ctx.startService(alarmManager);
     }
 
-    public static void stopSerivce(Context ctx) {
-        ctx.stopService(new Intent(ctx,QRAlarmManager.class));
-    }
 
+    public static void stopSerivce(Context ctx) {
+        ctx.stopService(new Intent(ctx, QRAlarmManager.class));
+    }
 
     private int calculateDayDifference( int currentDay, int futureDay ) {
         int delta = currentDay - futureDay;

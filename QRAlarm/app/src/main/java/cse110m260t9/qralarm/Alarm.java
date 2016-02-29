@@ -18,8 +18,12 @@ public class Alarm implements Serializable{
     public ArrayList<Integer> daysAlarmShouldFire;
     private ArrayList<Integer> broadcastIDs;
     public boolean isRepeating;
-    public Calendar alarmTime;
     public String name;
+    public Calendar alarmTime;
+
+    private int hour;
+    private int minute;
+
 
 
     /**
@@ -34,7 +38,16 @@ public class Alarm implements Serializable{
         daysAlarmShouldFire = days;
         isRepeating = shouldRepeat;
         alarmTime = calendar;
+        hour = alarmTime.get(alarmTime.HOUR_OF_DAY);
+        minute = alarmTime.get(alarmTime.MINUTE);
     }
+
+    public boolean isAM() {
+        return hour >= 12 ? false : true;
+    }
+
+    public int getHour() { return hour; }
+    public int getMinute() { return minute; }
 
     private String scrubName( String name ) {
         String rv = new String(name);
@@ -60,7 +73,6 @@ public class Alarm implements Serializable{
                     break;
                 case 7: rv += "Saturday ";
                     break;
-
             }
         }
         rv += " ]\n";

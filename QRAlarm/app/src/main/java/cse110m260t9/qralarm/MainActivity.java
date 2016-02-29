@@ -135,14 +135,6 @@ public class MainActivity extends AppCompatActivity {
         QRAlarmManager.deleteAllAlarms(this);
     }
 
-    public void dumpAlarms(View v) {
-        /**EditText txt = (EditText)findViewById(R.id.testDisplay);
-        String acc = "";
-        for (Long i : AlarmIO.getAlarms(this)) {
-            acc += "| " + i.toString();
-        }
-        txt.setText(acc);*/
-    }
 
     @Override
     public void onStart() {
