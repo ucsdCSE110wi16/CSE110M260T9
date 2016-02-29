@@ -1,8 +1,5 @@
 package cse110m260t9.qralarm;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -19,6 +16,7 @@ import java.util.Calendar;
 public class EditAlarm extends AppCompatActivity {
     public RingtoneManager ringtoneManager;
     private TimePicker timePicker;
+    private QRAlarmManager qrAlarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +29,7 @@ public class EditAlarm extends AppCompatActivity {
         }
         this.timePicker = (TimePicker)this.findViewById(R.id.alarmTimePicker);
         toggleTodaysButton();
+        qrAlarmManager = new QRAlarmManager();
     }
 
     public void cancelAlarm(View v) {
@@ -41,7 +40,10 @@ public class EditAlarm extends AppCompatActivity {
 
         Alarm alarm = createAlarmFromUserInput(v);
         System.out.println(alarm);
-        alarm.registerAlarm(this);
+        Intent alarmManager = new Intent(this, QRAlarmManager.class);
+        alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
+        startService(alarmManager);
+        //qrAlarmManager.registerAlarm(this,alarm);
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);

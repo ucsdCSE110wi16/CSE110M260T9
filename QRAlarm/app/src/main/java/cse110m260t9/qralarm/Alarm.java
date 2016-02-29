@@ -6,19 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
  * Created by Michael on 2/28/2016.
  */
-public class Alarm {
+public class Alarm implements Serializable{
     // Fields
-    private ArrayList<Integer> daysAlarmShouldFire;
-    private boolean isRepeating;
-    private Calendar alarmTime;
-    private String name;
-    private final int ALARM_BUFFER = 2000;
+    public ArrayList<Integer> daysAlarmShouldFire;
+    private ArrayList<Integer> broadcastIDs;
+    public boolean isRepeating;
+    public Calendar alarmTime;
+    public String name;
+
 
     /**
      * Primary Constructor
@@ -32,50 +34,6 @@ public class Alarm {
         daysAlarmShouldFire = days;
         isRepeating = shouldRepeat;
         alarmTime = calendar;
-    }
-
-    /**
-     * Function Name: registerAlarm()
-     * Description: This function iterates over the list of all alarms and registers them with
-     *              the alarm manager through the overloaded registerAlarm function.
-     * @param ctx
-     */
-    public void registerAlarm(Context ctx) {
-        Calendar instance = Calendar.getInstance();
-        int today = instance.get(instance.DAY_OF_WEEK);
-        for(Integer day : daysAlarmShouldFire ) {
-            System.out.println("Day is: " + day);
-            Calendar alarmClone = (Calendar)alarmTime.clone();
-            // If the alarm is set for today
-            if( day == alarmTime.get(alarmTime.DAY_OF_WEEK)) {
-                // If the alarm should occur later in the week
-                if(instance.getTimeInMillis() > alarmTime.getTimeInMillis() + ALARM_BUFFER )
-                    alarmClone.add(Calendar.DAY_OF_WEEK, 7);
-                // If this condition doesn't hold, then we can assume the alarm will happen later
-                // in the day. The alarm clone should already be set to this value
-            }
-            // If the alarm is set to happen later during the week
-            else
-                alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
-            registerAlarm(ctx, alarmClone);
-        }
-
-    }
-
-    public void registerAlarm(Context ctx, Calendar time ) {
-        System.out.println("Registering alarm: ");
-        System.out.println(time);
-        long triggerAtMillis = time.getTimeInMillis();
-        PendingIntent operation = PendingIntent.getBroadcast(
-                ctx, 0, new Intent(ctx, AlarmReceiver.class), 0);
-        AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, operation);
-    }
-
-
-    private int calculateDayDifference( int currentDay, int futureDay ) {
-        int delta = currentDay - futureDay;
-        return delta < 0 ? Math.abs(delta) : 7-delta;
     }
 
     private String scrubName( String name ) {
@@ -106,19 +64,12 @@ public class Alarm {
             }
         }
         rv += " ]\n";
-        String hours = String.format("%02d",alarmTime.get(alarmTime.HOUR_OF_DAY) );
+        String hours = String.format("%02d", alarmTime.get(alarmTime.HOUR_OF_DAY));
         String minutes = String.format("%02d",alarmTime.get(alarmTime.MINUTE) );
         rv += "Time: " + hours + ":" + minutes;
         rv += "\nRepeats: " + isRepeating;
         return rv;
     }
 
-    public static void deleteAllAlarms(Context ctx) {
-        PendingIntent operation = PendingIntent.getBroadcast(
-                ctx, 0, new Intent(ctx, AlarmReceiver.class), 0);
-        AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(operation);
-        Toast.makeText(ctx,
-                "Cleared Alarms", Toast.LENGTH_SHORT).show();
-    }
+
 }
