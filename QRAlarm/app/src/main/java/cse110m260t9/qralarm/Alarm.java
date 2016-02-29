@@ -41,11 +41,12 @@ public class Alarm {
         Calendar instance = Calendar.getInstance();
         int today = instance.get(instance.DAY_OF_WEEK);
         for(Integer day : daysAlarmShouldFire ) {
+            System.out.println("Day is: " + day);
             Calendar alarmClone = (Calendar)alarmTime.clone();
             // If the alarm is set for today
-            if( day.intValue() == alarmTime.DAY_OF_WEEK) {
+            if( day == alarmTime.get(alarmTime.DAY_OF_WEEK)) {
                 // If the alarm should occur later in the week
-                if(Calendar.getInstance().getTimeInMillis() >= alarmTime.getTimeInMillis() )
+                if(instance.getTimeInMillis() > alarmTime.getTimeInMillis() + 2000 )
                     alarmClone.add(Calendar.DAY_OF_WEEK, 7);
                 // If this condition doesn't hold, then we can assume the alarm will happen later
                 // in the day. The alarm clone should already be set to this value
@@ -59,6 +60,8 @@ public class Alarm {
     }
 
     public void registerAlarm(Context ctx, Calendar time ) {
+        System.out.println("Registering alarm: ");
+        System.out.println(time);
         long triggerAtMillis = time.getTimeInMillis();
         PendingIntent operation = PendingIntent.getBroadcast(
                 ctx, 0, new Intent(ctx, AlarmReceiver.class), 0);
