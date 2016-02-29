@@ -38,7 +38,7 @@ public class QRAlarmManager extends IntentService{
         if( intent.hasExtra(DELETE_ALARMS))
             _deleteAllAlarms(this);
         if( intent.hasExtra("Testing Serial")) {
-            Alarm alarm = Alarm.fromSerializedString(lastAlarmSerial);
+            Alarm alarm = AlarmIO.loadTestAlarm(this);
             System.out.println("Testing Serialization");
             System.out.println("Serialized String: " + lastAlarmSerial);
             System.out.println("Reconstructed alarm: " + alarm);
@@ -79,7 +79,7 @@ public class QRAlarmManager extends IntentService{
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
             _registerAlarm(ctx, alarmClone);
         }
-        lastAlarmSerial = alarm.getSerializedString();
+        AlarmIO.saveTestAlarm(this, alarm);
 
     }
 

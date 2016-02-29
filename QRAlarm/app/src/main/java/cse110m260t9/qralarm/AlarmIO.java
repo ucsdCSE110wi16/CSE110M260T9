@@ -19,16 +19,21 @@ public class AlarmIO {
         alarmDir.mkdirs();
     }
 
-    public static Alarm loadTestAlarm( Context ctx, Alarm alm ) {
-        return null;
+    public static Alarm loadTestAlarm( Context ctx ) {
+        createAlarmsDir(ctx);
+        File alarmDir = getAlarmsDir(ctx);
+        File inFile = new File(alarmDir, "Test.alarm");
+        byte[] bytes = FileIO.retrieveByteArrayFromFile( inFile, ctx);
+        return Alarm.fromSerializedString(bytes);
     }
 
     public static void saveTestAlarm( Context ctx, Alarm alm ) {
         createAlarmsDir(ctx);
         File alarmDir = getAlarmsDir(ctx);
+        File outFile = new File(alarmDir, "Test.alarm");
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(new File(alarmDir, "Test.alarm"));
+            fos = new FileOutputStream(outFile);
             fos.write(alm.getSerializedString());
             fos.close();
         } catch (FileNotFoundException e) {

@@ -2,6 +2,7 @@ package cse110m260t9.qralarm;
 
 import android.content.Context;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -94,12 +95,31 @@ public class FileIO {
         return retVal;
     }
 
-
     public static byte[] retrieveByteArrayFromFile( String fileName, Context ctx ) {
-        ArrayList<Byte> intermediaryArray = new ArrayList<>();
         try {
             // Create the FileInputStream
             FileInputStream fileInStream = ctx.openFileInput(fileName);
+            return _retrieveByteArrayFromFile(fileInStream, ctx);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static byte[] retrieveByteArrayFromFile( File file, Context ctx ) {
+        try {
+            // Create the FileInputStream
+            FileInputStream fileInStream = new FileInputStream(file);
+            return _retrieveByteArrayFromFile(fileInStream, ctx);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static byte[] _retrieveByteArrayFromFile(FileInputStream fileInStream, Context ctx){
+        ArrayList<Byte> intermediaryArray = new ArrayList<>();
+        try {
             // Grab a byte from the file stream and append it to the end of retVal
             // -1 Signifies the EOF so we stop reading there
             for( int i = fileInStream.read(); i != -1; i = fileInStream.read() ) {
