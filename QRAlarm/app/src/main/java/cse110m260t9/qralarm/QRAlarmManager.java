@@ -39,8 +39,13 @@ public class QRAlarmManager extends IntentService{
 
     }
 
+    @Override public int onStartCommand(Intent intent, int flag, int startID) {
+
+        return 0;
+    }
+
     /**
-     * Function Name: registerAlarm()
+     * Function Name: _registerAlarm()
      * Description: This function iterates over the list of all alarms and registers them with
      *              the alarm manager through the overloaded registerAlarm function.
      * @param ctx
@@ -80,6 +85,7 @@ public class QRAlarmManager extends IntentService{
     }
 
     private void _deleteAllAlarms(Context ctx) {
+        System.out.println("Before clearing Broadcast IDs: " + broadCastIDs);
         for(Integer id : broadCastIDs ) {
             PendingIntent operation = PendingIntent.getBroadcast(
                     ctx, id, new Intent(ctx, AlarmReceiver.class), 0);
