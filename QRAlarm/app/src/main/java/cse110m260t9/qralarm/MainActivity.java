@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     //freak out)
     private String stringLocation;
 
-
+    private static boolean isAtHome = false;
 
     public enum EOptions {
         E_OPTIONS_SET_HOME("Set Home Location", 0),
@@ -274,6 +274,18 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    public static void setIsAtHome(boolean bool){
+
+        isAtHome = bool;
+
+    }
+
+    public static boolean IsAtHome(){
+
+        return isAtHome;
+
     }
 
 }

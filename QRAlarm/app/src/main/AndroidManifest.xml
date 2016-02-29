@@ -68,6 +68,8 @@
             android:name=".AlarmReceiver"
             android:theme="@style/Theme.AppCompat"/>
 
+        <receiver android:name=".ProximityIntentReceiver"/>
+
         <activity
             android:name=".EditAlarm"
             android:theme="@style/Theme.AppCompat"/>

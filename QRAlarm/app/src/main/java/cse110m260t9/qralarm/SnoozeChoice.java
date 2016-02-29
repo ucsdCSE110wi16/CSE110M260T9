@@ -39,16 +39,33 @@ public class SnoozeChoice extends AppCompatActivity {
         Button b1 = (Button) findViewById(R.id.button);
         Button b2 = (Button) findViewById(R.id.button2);
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        if(MainActivity.IsAtHome()) {
 
-            @Override
-            public void onClick(View view) {
-                Intent turnItOff = new Intent(SnoozeChoice.this, QRScannerActivity.class);
+            b1.setOnClickListener(new View.OnClickListener() {
 
-                SnoozeChoice.this.startActivity(turnItOff);
+                @Override
+                public void onClick(View view) {
+                    Intent turnItOff = new Intent(SnoozeChoice.this, QRScannerActivity.class);
 
-            }
-        });
+                    SnoozeChoice.this.startActivity(turnItOff);
+
+                }
+            });
+        } else {
+
+            b1.setText("Turn off Alarm");
+
+            b1.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    ringtone.stop();
+
+                    startActivity(new Intent(SnoozeChoice.this, MainActivity.class));
+
+                }
+            });
+        }
 
         b2.setOnClickListener(new View.OnClickListener() {
 

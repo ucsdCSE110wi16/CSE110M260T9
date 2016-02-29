@@ -12,17 +12,24 @@ Sources of Help:
  ================================================================================================*/
 
 import android.Manifest;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -66,12 +73,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //private variable to store location
     private LatLng latLng;
 
+    private static final long MINIMUM_DISTANCECHANGE_FOR_UPDATE = 1; // in Meters
+    private static final long MINIMUM_TIME_BETWEEN_UPDATE = 1000; // in Milliseconds
+    private static final long POINT_RADIUS = 100; // in Meters
+    private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
+
+    private LocationManager locationManager;
+
+    private ProximityIntentReceiver proximityIntentReceiver;
+    private IntentFilter filter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_maps);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         //get references to all the components
         textLocation = (TextView) findViewById(R.id.textNewLocation);
@@ -107,8 +126,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) //we can use lower if needed
-                .setInterval(10 * 1000) //set interval to 10 seconds
-                .setFastestInterval(1 * 1000); //set fastest interval to 1 second
+                .setInterval(10 * MINIMUM_TIME_BETWEEN_UPDATE) //set interval to 10 seconds
+                .setFastestInterval(1 * MINIMUM_TIME_BETWEEN_UPDATE); //set fastest interval to 1 second
     }
 
 
@@ -136,6 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onResume();
         //setUpMapIfNeeded();
         mGoogleApiClient.connect();
+
     }
 
     @Override
@@ -147,6 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             mGoogleApiClient.disconnect();
         }
+
     }
 
     @Override
@@ -224,6 +245,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent returnIntent = new Intent(this, MainActivity.class);
         returnIntent.putExtra("Location", String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
         setResult(MyConstants.LOCATION_SUCCESSFULLY_SET, returnIntent);
+        addProximityAlert();
         finish();
     }
 
@@ -241,4 +263,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return latLng;
     }
+
+    private void addProximityAlert(){
+
+        //Intent intent = new Intent(MyConstants.PROX_ALERT_FLAG);
+        Intent intent = new Intent(this, ProximityIntentReceiver.class);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            locationManager.addProximityAlert(
+                    latLng.latitude, // the latitude of the central point of the alert region
+                    latLng.longitude, // the longitude of the central point of the alert region
+                    POINT_RADIUS, // the radius of the central point of the alert region, in meters
+                    PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
+                    proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
+            );
+
+            //IntentFilter filter = new IntentFilter(MyConstants.PROX_ALERT_FLAG);
+            //registerReceiver(new ProximityIntentReceiver(), filter);
+            Toast.makeText(getApplicationContext(), "Alert Added", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

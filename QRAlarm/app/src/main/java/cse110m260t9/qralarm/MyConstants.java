@@ -14,6 +14,7 @@ public abstract class MyConstants {
     public final static String LOCATION_NOT_SET = "Location not set";
     public final static String LOCATION_SET = "Location set";
     public final static String ALARM_SAVED_STR = "Alarm saved";
+    public final static String PROX_ALERT_FLAG = "Proximity Alert flag";
 
     public final static int NEW_ALARM_ACTIVITY = 0xF1;
     public final static int LOCATION_SUCCESSFULLY_SET = 0x20;
