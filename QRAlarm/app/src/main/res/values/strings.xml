@@ -11,6 +11,7 @@
     <string name="toggleTextAlarmFriday">F</string>
     <string name="toggleTextAlarmSaturday">S</string>
     <string name="alarmCheckRepeatWeeklyText">Repeat Weekly</string>
+    <string name="alarmRingtoneButtonText">Alarm tone</string>
     <string name="alarmTextLabelHint">Name</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>

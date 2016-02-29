@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TimePicker;
@@ -13,7 +14,6 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 public class EditAlarm extends AppCompatActivity {
-    public RingtoneManager ringtoneManager;
     private TimePicker timePicker;
 
     @Override
@@ -21,10 +21,6 @@ public class EditAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_alarm);
 
-        if (this.ringtoneManager == null) {
-            this.ringtoneManager = new RingtoneManager(this);
-            this.ringtoneManager.setType(RingtoneManager.TYPE_ALARM);
-        }
         this.timePicker = (TimePicker)this.findViewById(R.id.alarmTimePicker);
     }
 
@@ -48,5 +44,17 @@ public class EditAlarm extends AppCompatActivity {
         Intent returnIntent = new Intent(this, MainActivity.class);
         setResult(MyConstants.NEW_ALARM_SUCCESSFULLY_SET, returnIntent);
         this.finish();
+    }
+
+    public void listAlarmTones(View v) {
+        Intent rtIntent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                Settings.System.DEFAULT_ALARM_ALERT_URI);
+        rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
+                Settings.System.DEFAULT_ALARM_ALERT_URI);
+        rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+        rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
+        rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
+        this.startActivity(rtIntent);
     }
 }

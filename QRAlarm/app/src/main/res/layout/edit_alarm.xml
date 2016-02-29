@@ -50,8 +50,8 @@
         android:fillViewport="false">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
             <TimePicker
                 android:id="@+id/alarmTimePicker"
@@ -175,22 +175,24 @@
                 android:textStyle="normal"
                 android:typeface="normal" />
 
-            <Spinner
+            <Button
                 android:clickable="true"
-                android:id="@+id/alarmRingtoneSpinner"
-                android:layout_alignParentStart="false"
+                android:enabled="true"
+                android:id="@+id/alarmRingtoneButton"
                 android:layout_below="@+id/alarmCheckRepeatWeekly"
-                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
+                android:layout_width="match_parent"
+                android:onClick="listAlarmTones"
+                android:text="@string/alarmRingtoneButtonText"
+                android:textStyle="normal"
+                android:typeface="normal" />
 
             <EditText
                 android:enabled="true"
                 android:hint="@string/alarmTextLabelHint"
                 android:id="@+id/alarmTextLabel"
                 android:inputType="text"
-                android:layout_alignParentStart="false"
-                android:layout_below="@+id/alarmRingtoneSpinner"
+                android:layout_below="@+id/alarmRingtoneButton"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
