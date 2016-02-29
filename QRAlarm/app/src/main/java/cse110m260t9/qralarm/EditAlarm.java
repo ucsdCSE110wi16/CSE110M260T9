@@ -8,6 +8,8 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
@@ -36,19 +38,28 @@ public class EditAlarm extends AppCompatActivity {
     }
 
     public void saveAlarm(View v) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, this.timePicker.getCurrentHour());
-        calendar.set(Calendar.MINUTE, this.timePicker.getCurrentMinute());
-        System.out.println(calendar);
 
-
-        Alarm alarm = new Alarm("", calendar, whichDays(), false);
+        Alarm alarm = createAlarmFromUserInput(v);
         alarm.registerAlarm(this);
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);
         setResult(MyConstants.NEW_ALARM_SUCCESSFULLY_SET, returnIntent);
         this.finish();
+    }
+
+    private Alarm createAlarmFromUserInput(View v) {
+        // Get the alarm's name
+        EditText nameField = (EditText)findViewById(R.id.alarmTextLabel);
+        String name = nameField.getText().toString();
+        // Does the alarm repeat?
+        CheckBox isRepeatingCheckBox = (CheckBox) findViewById(R.id.alarmCheckRepeatWeekly);
+        boolean isRepeating = isRepeatingCheckBox.isChecked();
+        // Create the calendar to represent time
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, this.timePicker.getCurrentHour());
+        calendar.set(Calendar.MINUTE, this.timePicker.getCurrentMinute());
+        return new Alarm(name, calendar, whichDays(), isRepeating);
     }
 
     public void toggleTodaysButton() {

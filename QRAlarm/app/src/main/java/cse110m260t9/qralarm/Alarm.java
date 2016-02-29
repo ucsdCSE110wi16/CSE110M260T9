@@ -17,6 +17,7 @@ public class Alarm {
     private boolean isRepeating;
     private Calendar alarmTime;
     private String name;
+    private final int ALARM_BUFFER = 2000;
 
     /**
      * Primary Constructor
@@ -46,7 +47,7 @@ public class Alarm {
             // If the alarm is set for today
             if( day == alarmTime.get(alarmTime.DAY_OF_WEEK)) {
                 // If the alarm should occur later in the week
-                if(instance.getTimeInMillis() > alarmTime.getTimeInMillis() + 2000 )
+                if(instance.getTimeInMillis() > alarmTime.getTimeInMillis() + ALARM_BUFFER )
                     alarmClone.add(Calendar.DAY_OF_WEEK, 7);
                 // If this condition doesn't hold, then we can assume the alarm will happen later
                 // in the day. The alarm clone should already be set to this value
