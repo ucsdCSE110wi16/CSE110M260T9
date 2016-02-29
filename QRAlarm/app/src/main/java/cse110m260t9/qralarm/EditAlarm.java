@@ -114,7 +114,6 @@ public class EditAlarm extends AppCompatActivity {
         ToggleButton thursday  = (ToggleButton) findViewById(R.id.toggleButtonAlarmThursday);
         ToggleButton friday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmFriday);
         ToggleButton saturday  = (ToggleButton) findViewById(R.id.toggleButtonAlarmSaturday);
-
         if(sunday.isChecked())
             result.add(new Integer(Calendar.SUNDAY));
         if(monday.isChecked())
@@ -131,5 +130,5 @@ public class EditAlarm extends AppCompatActivity {
             result.add(new Integer(Calendar.SATURDAY));
         return result;
     }
-    
+
 }

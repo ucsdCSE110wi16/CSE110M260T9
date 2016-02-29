@@ -116,7 +116,7 @@ public class QRAlarmManager extends IntentService{
         ctx.stopService(new Intent(ctx, QRAlarmManager.class));
     }
 
-    private int calculateDayDifference( int currentDay, int futureDay ) {
+    private static int calculateDayDifference( int currentDay, int futureDay ) {
         int delta = currentDay - futureDay;
         return delta < 0 ? Math.abs(delta) : 7-delta;
     }
