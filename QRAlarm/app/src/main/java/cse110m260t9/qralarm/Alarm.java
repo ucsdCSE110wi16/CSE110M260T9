@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +28,7 @@ public class Alarm {
      * @param shouldRepeat <-- Boolean value to determine whether the alarm repeats
      */
     public Alarm( String name, Calendar calendar, ArrayList<Integer> days, boolean shouldRepeat ) {
+        this.name = scrubName(name);
         daysAlarmShouldFire = days;
         isRepeating = shouldRepeat;
         alarmTime = calendar;
@@ -74,5 +76,48 @@ public class Alarm {
     private int calculateDayDifference( int currentDay, int futureDay ) {
         int delta = currentDay - futureDay;
         return delta < 0 ? Math.abs(delta) : 7-delta;
+    }
+
+    private String scrubName( String name ) {
+        String rv = new String(name);
+        return rv.replace(";", "").replace(",", "");
+    }
+
+    @Override public String toString() {
+        String rv = "Alarm name: " + this.name;
+        rv += "\nDays: [ ";
+        Calendar instance = Calendar.getInstance();
+        for(Integer day : daysAlarmShouldFire ) {
+            switch (day) {
+                case 1: rv += "Sunday ";
+                    break;
+                case 2: rv += "Monday ";
+                    break;
+                case 3: rv += "Tuesday ";
+                    break;
+                case 4: rv += "Wednesday ";
+                    break;
+                case 5: rv += "Thursday ";
+                    break;
+                case 6: rv += "Friday ";
+                    break;
+                case 7: rv += "Saturday ";
+                    break;
+
+            }
+        }
+        rv += " ]\n";
+        rv += "Time: "+alarmTime.get(alarmTime.HOUR_OF_DAY) + ":" +alarmTime.get(alarmTime.MINUTE);
+        rv += "\nRepeats: " + isRepeating;
+        return rv;
+    }
+
+    public static void deleteAllAlarms(Context ctx) {
+        PendingIntent operation = PendingIntent.getBroadcast(
+                ctx, 0, new Intent(ctx, AlarmReceiver.class), 0);
+        AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(operation);
+        Toast.makeText(ctx,
+                "Cleared Alarms", Toast.LENGTH_SHORT).show();
     }
 }

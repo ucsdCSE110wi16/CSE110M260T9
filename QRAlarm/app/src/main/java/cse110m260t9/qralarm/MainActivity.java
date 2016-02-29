@@ -132,21 +132,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearAlarms(View v) {
-        PendingIntent operation = PendingIntent.getBroadcast(
-                this, 0, new Intent(this, AlarmReceiver.class), 0);
-        AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(operation);
-        Toast.makeText(MainActivity.this,
-                "Cleared Alarms", Toast.LENGTH_SHORT).show();
+        Alarm.deleteAllAlarms(this);
     }
 
     public void dumpAlarms(View v) {
-        EditText txt = (EditText)findViewById(R.id.testDisplay);
+        /**EditText txt = (EditText)findViewById(R.id.testDisplay);
         String acc = "";
         for (Long i : AlarmIO.getAlarms(this)) {
             acc += "| " + i.toString();
         }
-        txt.setText(acc);
+        txt.setText(acc);*/
     }
 
     @Override
