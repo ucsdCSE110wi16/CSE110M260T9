@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="btnToggleOffDotW">#BB0000</color>
-    <color name="btnToggleOnDotW">#00FF00</color>
+    <color name="btnToggleOffDotW">#384c87</color>
+    <color name="btnToggleOnDotW">#4aadea</color>
 </resources>
