@@ -40,10 +40,8 @@ public class EditAlarm extends AppCompatActivity {
 
         Alarm alarm = createAlarmFromUserInput(v);
         System.out.println(alarm);
-        Intent alarmManager = new Intent(this, QRAlarmManager.class);
-        alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
-        startService(alarmManager);
-        //qrAlarmManager.registerAlarm(this,alarm);
+        QRAlarmManager.registerAlarm(this,alarm);
+
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);

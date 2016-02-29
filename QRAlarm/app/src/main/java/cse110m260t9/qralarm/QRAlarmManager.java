@@ -5,7 +5,6 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ public class QRAlarmManager extends IntentService{
     private ArrayList<Integer> broadCastIDs;
     private final int ALARM_BUFFER = 2000;
     public static final String ALARM_KEY = "QR_ALARM_MANAGER_ALARM_KEY";
+    public static final String DELETE_ALARMS = "QR_ALARM_MANAGER_DELETE_ALL";
     public QRAlarmManager() {
         super("QRAlarmManager");
     }
@@ -30,8 +30,13 @@ public class QRAlarmManager extends IntentService{
     }
 
     @Override public void onHandleIntent(Intent intent) {
-        Alarm alarm = (Alarm) intent.getSerializableExtra(ALARM_KEY);
-        registerAlarm(this, alarm);
+        if( intent.hasExtra(ALARM_KEY)) {
+            Alarm alarm = (Alarm) intent.getSerializableExtra(ALARM_KEY);
+            _registerAlarm(this, alarm);
+        }
+        if( intent.hasExtra(DELETE_ALARMS))
+            _deleteAllAlarms(this);
+
     }
 
     /**
@@ -40,7 +45,7 @@ public class QRAlarmManager extends IntentService{
      *              the alarm manager through the overloaded registerAlarm function.
      * @param ctx
      */
-    public void registerAlarm(Context ctx, Alarm alarm) {
+    private void _registerAlarm(Context ctx, Alarm alarm) {
         Calendar instance = Calendar.getInstance();
         int today = instance.get(instance.DAY_OF_WEEK);
         for(Integer day : alarm.daysAlarmShouldFire ) {
@@ -57,12 +62,12 @@ public class QRAlarmManager extends IntentService{
             // If the alarm is set to happen later during the week
             else
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
-            registerAlarm(ctx, alarmClone);
+            _registerAlarm(ctx, alarmClone);
         }
 
     }
 
-    private void registerAlarm(Context ctx, Calendar time ) {
+    private void _registerAlarm(Context ctx, Calendar time ) {
         System.out.println("Registering alarm: ");
         System.out.println(time);
         long triggerAtMillis = time.getTimeInMillis();
@@ -74,7 +79,7 @@ public class QRAlarmManager extends IntentService{
         broadCastIDs.add(broadCastID);
     }
 
-    public void deleteAllAlarms(Context ctx) {
+    private void _deleteAllAlarms(Context ctx) {
         for(Integer id : broadCastIDs ) {
             PendingIntent operation = PendingIntent.getBroadcast(
                     ctx, id, new Intent(ctx, AlarmReceiver.class), 0);
@@ -84,6 +89,18 @@ public class QRAlarmManager extends IntentService{
                     "Cleared Alarms", Toast.LENGTH_SHORT).show();
         }
         broadCastIDs.clear();
+    }
+
+    public static void deleteAllAlarms(Context ctx ) {
+        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
+        alarmManager.putExtra(QRAlarmManager.DELETE_ALARMS, true);
+        ctx.startService(alarmManager);
+    }
+
+    public static void registerAlarm(Context ctx, Alarm alarm ) {
+        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
+        alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
+        ctx.startService(alarmManager);
     }
 
 

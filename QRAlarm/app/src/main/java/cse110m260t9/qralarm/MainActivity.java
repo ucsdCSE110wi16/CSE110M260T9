@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearAlarms(View v) {
-        //Alarm.deleteAllAlarms(this);
+        QRAlarmManager.deleteAllAlarms(this);
     }
 
     public void dumpAlarms(View v) {
