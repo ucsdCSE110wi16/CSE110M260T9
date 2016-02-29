@@ -71,7 +71,7 @@ public class Alarm implements Serializable{
         String day = String.format("%02d",alarmTime.get(alarmTime.DAY_OF_MONTH));
         rv += "Time: " + hours + ":" + minutes;
         rv += "\nRepeats: " + isRepeating;
-        rv += "\nDate: " + year + "/" + month + "/" + day;
+        rv += "\nDate Alarm was Set: " + year + "/" + month + "/" + day;
         return rv;
     }
 

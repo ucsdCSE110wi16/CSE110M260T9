@@ -95,6 +95,7 @@ public class EditAlarm extends AppCompatActivity {
         button.setChecked(true);
     }
 
+
     public ArrayList<Integer> whichDays() {
         ArrayList<Integer> result = new ArrayList<>();
         ToggleButton sunday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);

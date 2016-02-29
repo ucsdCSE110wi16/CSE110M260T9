@@ -109,6 +109,10 @@ public class QRAlarmManager extends IntentService{
         ctx.startService(alarmManager);
     }
 
+    public static void stopSerivce(Context ctx) {
+        ctx.stopService(new Intent(ctx,QRAlarmManager.class));
+    }
+
 
     private int calculateDayDifference( int currentDay, int futureDay ) {
         int delta = currentDay - futureDay;
