@@ -7,14 +7,14 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TURN OFF"
+        android:text="Scan QR Code"
         android:id="@+id/button"
         android:layout_gravity="center_horizontal"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SNOOZE"
+        android:text="Snooze"
         android:id="@+id/button2"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>
