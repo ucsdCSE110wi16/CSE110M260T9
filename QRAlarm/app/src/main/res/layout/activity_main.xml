@@ -26,6 +26,16 @@
             android:textColor="#ffffff"
             android:textStyle="normal"
             android:typeface="normal" />
+
+        <!--Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dump Alarms"
+            android:id="@+id/button"
+            android:onClick="clearAlarms"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" /-->
+
     </RelativeLayout>
 
     <ListView

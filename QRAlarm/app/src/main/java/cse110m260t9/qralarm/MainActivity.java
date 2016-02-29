@@ -1,5 +1,8 @@
 package cse110m260t9.qralarm;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -12,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -127,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
         this.startActivityForResult(new Intent(this, EditAlarm.class), MyConstants.NEW_ALARM_ACTIVITY);
     }
 
+    public void clearAlarms(View v) {
+        QRAlarmManager.deleteAllAlarms(this);
+    }
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -165,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+        QRAlarmManager.stopSerivce(this);
+
     }
 
     @Override
