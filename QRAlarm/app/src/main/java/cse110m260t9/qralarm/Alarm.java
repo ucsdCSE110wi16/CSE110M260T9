@@ -39,7 +39,7 @@ public class Alarm implements Serializable{
      * @param shouldRepeat <-- Boolean value to determine whether the alarm repeats
      */
     public Alarm( String name, Calendar calendar, ArrayList<Integer> days, boolean shouldRepeat ) {
-        this.name = scrubName(name);
+        this.name = name;
         daysAlarmShouldFire = days;
         isRepeating = shouldRepeat;
         alarmTime = calendar;
@@ -74,10 +74,6 @@ public class Alarm implements Serializable{
     public int getHour() { return hour; }
     public int getMinute() { return minute; }
 
-    private String scrubName( String name ) {
-        String rv = new String(name);
-        return rv.replace(";", "").replace(",", "");
-    }
 
     private void purgeOldAlarms() {
         if(isRepeating)
