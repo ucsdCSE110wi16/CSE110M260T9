@@ -1,20 +1,27 @@
 package cse110m260t9.qralarm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EditAlarm extends AppCompatActivity {
+    private static final int RINGTONE_ACTIVITY_ID = 0;
+
+    private Calendar calendar;
     private TimePicker timePicker;
     private QRAlarmManager qrAlarmManager;
 
@@ -23,28 +30,55 @@ public class EditAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_alarm);
 
+        this.calendar = Calendar.getInstance();
+        this.toggleButtonForToday();
         this.timePicker = (TimePicker)this.findViewById(R.id.alarmTimePicker);
-        toggleTodaysButton();
         qrAlarmManager = new QRAlarmManager();
     }
 
+    private void toggleButtonForToday() {
+        ToggleButton button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmSunday);
+        switch (this.calendar.get(Calendar.DAY_OF_WEEK)) {
+            case Calendar.SUNDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmSunday);
+                break;
+            case Calendar.MONDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmMonday);
+                break;
+            case Calendar.TUESDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmTuesday);
+                break;
+            case Calendar.WEDNESDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmWednesday);
+                break;
+            case Calendar.THURSDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmThursday);
+                break;
+            case Calendar.FRIDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmFriday);
+                break;
+            case Calendar.SATURDAY:
+                button = (ToggleButton)this.findViewById(R.id.toggleButtonAlarmSaturday);
+                break;
+        }
+        button.setChecked(true);
+    }
+
     public void cancelAlarm(View v) {
+        this.setResult(Activity.RESULT_CANCELED);
         this.finish();
     }
 
     public void saveAlarm(View v) {
-
         Alarm alarm = createAlarmFromUserInput(v);
         System.out.println(alarm);
-        QRAlarmManager.registerAlarm(this,alarm);
-
+        QRAlarmManager.registerAlarm(this, alarm);
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);
-        setResult(MyConstants.NEW_ALARM_SUCCESSFULLY_SET, returnIntent);
+        this.setResult(Activity.RESULT_OK, returnIntent);
         this.finish();
     }
-
 
     public void listAlarmTones(View v) {
         Intent rtIntent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
@@ -55,7 +89,22 @@ public class EditAlarm extends AppCompatActivity {
         rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         rtIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-        this.startActivity(rtIntent);
+        this.startActivityForResult(rtIntent, EditAlarm.RINGTONE_ACTIVITY_ID);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case EditAlarm.RINGTONE_ACTIVITY_ID:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private Alarm createAlarmFromUserInput(View v) {
@@ -69,66 +118,40 @@ public class EditAlarm extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, this.timePicker.getCurrentHour());
         calendar.set(Calendar.MINUTE, this.timePicker.getCurrentMinute());
-        return new Alarm(name, calendar, whichDays(), isRepeating);
+        ArrayList<Integer> days = new ArrayList<>();
+        whichDays(days);
+        return new Alarm(name, calendar, days, isRepeating);
     }
 
-    public void toggleTodaysButton() {
-        Calendar calendar = Calendar.getInstance();
-        ToggleButton button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
-        //System.out.println("Today is: " + calendar.get(calendar.DAY_OF_WEEK));
-        //System.out.println("Monday is: " + calendar.MONDAY);
-        //System.out.println(calendar);
-        switch (calendar.get(calendar.DAY_OF_WEEK)) {
-            case Calendar.SUNDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
-                break;
-            case Calendar.MONDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmMonday);
-                break;
-            case Calendar.TUESDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmTuesday);
-                break;
-            case Calendar.WEDNESDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmWednesday);
-                break;
-            case Calendar.THURSDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmThursday);
-                break;
-            case Calendar.FRIDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmFriday);
-                break;
-            case Calendar.SATURDAY:
-                button = (ToggleButton) findViewById(R.id.toggleButtonAlarmSaturday);
-                break;
+    private void whichDays(ArrayList<Integer> days) {
+        LinearLayout llh = (LinearLayout)this.findViewById(R.id.llhDotw);
+        for (int i = 0; i < llh.getChildCount(); ++i) {
+            View child = llh.getChildAt(i);
+            switch (child.getId()) {
+                case R.id.toggleButtonAlarmSunday:
+                    days.add(Calendar.SUNDAY);
+                    break;
+                case R.id.toggleButtonAlarmMonday:
+                    days.add(Calendar.MONDAY);
+                    break;
+                case R.id.toggleButtonAlarmTuesday:
+                    days.add(Calendar.TUESDAY);
+                    break;
+                case R.id.toggleButtonAlarmWednesday:
+                    days.add(Calendar.WEDNESDAY);
+                    break;
+                case R.id.toggleButtonAlarmThursday:
+                    days.add(Calendar.THURSDAY);
+                    break;
+                case R.id.toggleButtonAlarmFriday:
+                    days.add(Calendar.FRIDAY);
+                    break;
+                case R.id.toggleButtonAlarmSaturday:
+                    days.add(Calendar.SATURDAY);
+                    break;
+                default:
+                    break;
+            }
         }
-        button.setChecked(true);
     }
-
-
-    public ArrayList<Integer> whichDays() {
-        ArrayList<Integer> result = new ArrayList<>();
-        ToggleButton sunday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmSunday);
-        ToggleButton monday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmMonday);
-        ToggleButton tuesday   = (ToggleButton) findViewById(R.id.toggleButtonAlarmTuesday);
-        ToggleButton wednesday = (ToggleButton) findViewById(R.id.toggleButtonAlarmWednesday);
-        ToggleButton thursday  = (ToggleButton) findViewById(R.id.toggleButtonAlarmThursday);
-        ToggleButton friday    = (ToggleButton) findViewById(R.id.toggleButtonAlarmFriday);
-        ToggleButton saturday  = (ToggleButton) findViewById(R.id.toggleButtonAlarmSaturday);
-        if(sunday.isChecked())
-            result.add(new Integer(Calendar.SUNDAY));
-        if(monday.isChecked())
-            result.add(new Integer(Calendar.MONDAY));
-        if(tuesday.isChecked())
-            result.add(new Integer(Calendar.TUESDAY));
-        if(wednesday.isChecked())
-            result.add(new Integer(Calendar.WEDNESDAY));
-        if(thursday.isChecked())
-            result.add(new Integer(Calendar.THURSDAY));
-        if(friday.isChecked())
-            result.add(new Integer(Calendar.FRIDAY));
-        if(saturday.isChecked())
-            result.add(new Integer(Calendar.SATURDAY));
-        return result;
-    }
-
 }
