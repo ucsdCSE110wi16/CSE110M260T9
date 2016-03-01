@@ -21,6 +21,14 @@ public class AlarmIO {
         return alarmDir.listFiles();
     }
 
+    public static ArrayList<Alarm> getAllAlarms(Context ctx ) {
+        File[] files = getAllAlarmFiles(ctx);
+        ArrayList<Alarm> alarms = new ArrayList<>();
+        for(File f : files )
+            alarms.add( loadAlarm(ctx, f) );
+        return alarms;
+    }
+
     public static void deleteAllAlarms( Context ctx ) {
         System.out.println("Deleting files");
         for(File f : getAllAlarmFiles(ctx)) {
@@ -28,9 +36,7 @@ public class AlarmIO {
             f.delete();
         }
     }
-    public static Alarm loadTestAlarm( Context ctx ) {
-        File alarmDir = getAlarmsDir(ctx);
-        File inFile = new File(alarmDir, "Test.alarm");
+    public static Alarm loadAlarm( Context ctx, File inFile) {
         byte[] bytes = FileIO.retrieveByteArrayFromFile( inFile, ctx);
         return Alarm.fromSerializedString(bytes);
     }
@@ -48,7 +54,6 @@ public class AlarmIO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private static File getAlarmsDir( Context ctx ) {

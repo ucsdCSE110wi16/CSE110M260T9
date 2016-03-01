@@ -78,7 +78,10 @@ public class QRAlarmManager extends IntentService{
             // If the alarm is set to happen later during the week
             else
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
-            _registerAlarm(ctx, alarmClone);
+            if( alarmClone.getTimeInMillis() > instance.getTimeInMillis() )
+                _registerAlarm(ctx, alarmClone);
+            else
+                alarm.daysAlarmShouldFire.remove(day);
             alarm.broadcastTimes.add(alarmClone.getTimeInMillis());
         }
         AlarmIO.saveAlarm(this, alarm);
@@ -121,6 +124,12 @@ public class QRAlarmManager extends IntentService{
         Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
         alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
         ctx.startService(alarmManager);
+    }
+
+    public static void reloadAlarms(Context ctx ) {
+        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(ctx);
+        for(Alarm alm : alarms )
+            registerAlarm(ctx, alm);
     }
 
     public static void registerSavedAlarm(Context ctx ) {

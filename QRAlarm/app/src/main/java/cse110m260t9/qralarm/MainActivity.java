@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         initNavDrawer();
+        QRAlarmManager.reloadAlarms(this);
     }
 
     @Override
