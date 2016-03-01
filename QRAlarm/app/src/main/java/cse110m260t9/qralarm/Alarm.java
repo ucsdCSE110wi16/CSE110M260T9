@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ListIterator;
 
 /**
  * Created by Michael on 2/28/2016.
@@ -45,6 +46,7 @@ public class Alarm implements Serializable{
         hour = alarmTime.get(alarmTime.HOUR_OF_DAY);
         minute = alarmTime.get(alarmTime.MINUTE);
         broadcastTimes = new ArrayList<>();
+
     }
 
     public Alarm( Alarm alm ) {
@@ -57,6 +59,7 @@ public class Alarm implements Serializable{
             ByteArrayInputStream bi = new ByteArrayInputStream(b);
             ObjectInputStream si = new ObjectInputStream(bi);
             Alarm alm  = (Alarm) si.readObject();
+            alm.purgeOldAlarms();
             return alm;
         } catch (Exception e) {
             System.out.println(e);
@@ -79,10 +82,27 @@ public class Alarm implements Serializable{
     private void purgeOldAlarms() {
         if(isRepeating)
             return;
-
+        System.out.println("Entering purge function");
+        Calendar today = Calendar.getInstance();
+        for(Calendar cal : getAlarmAsCalendarList() ) {
+            if( cal.getTimeInMillis() < today.getTimeInMillis() )
+            {
+                System.out.println("I should purge here");
+                ListIterator<Integer> listIterator = daysAlarmShouldFire.listIterator();
+                while(listIterator.hasNext()) {
+                    Integer i = listIterator.next();
+                    if( i == today.get(Calendar.DAY_OF_WEEK))
+                        listIterator.remove();
+                }
+            }
+        }
     }
 
+
     public ArrayList<Calendar> getAlarmAsCalendarList() {
+        return _getAlarmAsCalendarList();
+    }
+    private ArrayList<Calendar> _getAlarmAsCalendarList() {
         Calendar instance = Calendar.getInstance();
         System.out.println("Processing Alarm: " + this);
         int today = instance.get(instance.DAY_OF_WEEK);
@@ -93,17 +113,12 @@ public class Alarm implements Serializable{
             alarmClone.set(alarmClone.HOUR_OF_DAY, alarmTime.get(alarmTime.HOUR_OF_DAY));
             alarmClone.set(alarmClone.MINUTE, alarmTime.get(alarmTime.MINUTE));
             alarmClone.set(alarmClone.SECOND, alarmTime.get(alarmTime.SECOND));
+            alarmClone.set(alarmClone.MILLISECOND, alarmTime.get(alarmTime.MILLISECOND));
             // If the alarm is set for today
-            if (day == alarmClone.get(alarmClone.DAY_OF_WEEK)) {
-                // If the alarm should occur later in the week
-                if (instance.getTimeInMillis() > alarmClone.getTimeInMillis() + 2000)
-                    alarmClone.add(Calendar.DAY_OF_WEEK, 7);
-                // If this condition doesn't hold, then we can assume the alarm will happen later
-                // in the day. The alarm clone should already be set to this value
-            }
-            // If the alarm is set to happen later during the week
-            else
+            if (day != alarmClone.get(alarmClone.DAY_OF_WEEK))
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day));
+
+
             rv.add(alarmClone);
         }
         System.out.println("Finished processing Alarm: " + this);

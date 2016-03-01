@@ -110,7 +110,8 @@ public class QRAlarmManager extends IntentService{
         ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(ctx);
         AlarmIO.deleteAllAlarms(ctx);
         for(Alarm alm : alarms )
-            registerAlarm(ctx, alm);
+            if(alm.daysAlarmShouldFire.size() > 0)
+                registerAlarm(ctx, alm);
 
     }
 
