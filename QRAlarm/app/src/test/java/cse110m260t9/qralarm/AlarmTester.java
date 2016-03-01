@@ -90,4 +90,26 @@ public class AlarmTester {
         assertTrue(alm.broadcastTimes.size() == 0);
     }
 
+    @Test
+    public void TestAlarmSetOnTuesday() {
+        int day = today.get(Calendar.DAY_OF_WEEK);
+        Calendar tue = (Calendar)today.clone();
+        if(day != Calendar.TUESDAY)
+            tue.add(Calendar.DAY_OF_WEEK, Alarm.calculateDayDifference(day, Calendar.TUESDAY));
+        Alarm alm = new Alarm("Tuesday", today, tuesday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(tue.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
+    @Test
+    public void TestAlarmSetOnMonday() {
+        int day = today.get(Calendar.DAY_OF_WEEK);
+        Calendar mon = (Calendar)today.clone();
+        if(day != Calendar.MONDAY)
+            mon.add(Calendar.DAY_OF_WEEK, Alarm.calculateDayDifference(day, Calendar.MONDAY));
+        Alarm alm = new Alarm("Monday", today, monday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(mon.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
 }
