@@ -1,8 +1,5 @@
 package cse110m260t9.qralarm;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -15,14 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,32 +45,9 @@ public class MainActivity extends AppCompatActivity {
     //freak out)
     private String stringLocation;
 
+    //TEMPORARILY HERE
     private static boolean isAtHome = false;
 
-    public enum EOptions {
-        E_OPTIONS_SET_HOME("Set Home Location", 0),
-        E_OPTIONS_SHOW_HOME("Show Home Location", 1);
-
-        private final String text;
-        private final int id;
-
-        private EOptions(final String text, int id) {
-            this.text = text;
-            this.id = id;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
-
-        public int getId(){
-            return id;
-        }
-
-        private static final int size = EOptions.values().length;
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         initNavDrawer();
+
         QRAlarmManager.reloadAlarms(this);
     }
 
@@ -216,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (id == EOptions.E_OPTIONS_SHOW_HOME.getId()) {
+                if (id == DrawerOptions.EOptions.E_OPTIONS_SHOW_HOME.getId()) {
                     if(!stringLocation.isEmpty()){
 
                         //we make a new intent of going into Maps
@@ -236,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                                 "Location not set", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else if(id == EOptions.E_OPTIONS_SET_HOME.getId()) {
+                else if(id == DrawerOptions.EOptions.E_OPTIONS_SET_HOME.getId()) {
 
                     //intent to go into maps...
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
@@ -258,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Helper function to help us set up our NavDrawer
     private void addDrawerItems() {
-        String[] listArray = new String[EOptions.size];
+        String[] listArray = new String[DrawerOptions.EOptions.size];
         for(int i = 0; i < listArray.length; i++){
-            listArray[i] = EOptions.values()[i].toString();
+            listArray[i] = DrawerOptions.EOptions.values()[i].toString();
         }
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listArray);
         mDrawerList.setAdapter(mAdapter);
