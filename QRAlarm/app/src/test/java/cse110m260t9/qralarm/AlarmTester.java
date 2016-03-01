@@ -22,6 +22,7 @@ public class AlarmTester {
     ArrayList<Integer> thursday;
     ArrayList<Integer> friday;
     ArrayList<Integer> saturday;
+    ArrayList<Integer> everyday;
 
     @Before
     public void setup() {
@@ -40,6 +41,9 @@ public class AlarmTester {
         friday.add(Calendar.FRIDAY);
         saturday = new ArrayList<>();
         saturday.add(Calendar.SATURDAY);
+        everyday = new ArrayList<>();
+        for(int i = 1; i <= 7; i++)
+            everyday.add(i);
     }
 
     @Test
@@ -69,4 +73,21 @@ public class AlarmTester {
         for(int i = 1; i < 7; i++ )
             assertEquals(i, Alarm.calculateDayDifference(Calendar.SATURDAY, i));
     }
+
+    @Test
+    public void TestPurgeAlarms() {
+        today.add(Calendar.DAY_OF_WEEK, -27);
+        Alarm alm = new Alarm("Test", today, sunday, false);
+        alm.purgeOldAlarms();
+        assertTrue( alm.broadcastTimes.size() == 0 );
+    }
+
+    @Test
+    public void TestPurgeMultipleAlarms() {
+        today.add(Calendar.DAY_OF_WEEK, -7);
+        Alarm alm = new Alarm("Foo", today, everyday, false);
+        alm.purgeOldAlarms();
+        assertTrue(alm.broadcastTimes.size() == 0);
+    }
+
 }

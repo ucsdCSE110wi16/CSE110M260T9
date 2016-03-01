@@ -48,6 +48,7 @@ public class Alarm implements Serializable{
         minute = alarmTime.get(alarmTime.MINUTE);
         broadcastTimes = new ArrayList<>();
 
+
     }
 
     public Alarm( Alarm alm ) {
@@ -76,7 +77,7 @@ public class Alarm implements Serializable{
     public int getMinute() { return minute; }
 
 
-    private void purgeOldAlarms() {
+    public void purgeOldAlarms() {
         if(isRepeating)
             return;
         System.out.println("Entering purge function");
