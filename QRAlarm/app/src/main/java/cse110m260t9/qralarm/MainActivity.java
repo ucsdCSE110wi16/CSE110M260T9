@@ -104,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
         this.startActivityForResult(new Intent(this, EditAlarm.class), MyConstants.NEW_ALARM_ACTIVITY);
     }
 
-    public void clearAlarms(View v) {
-        QRAlarmManager.deleteAllAlarms(this);
+    /**public void clearAlarms(View v) {
+        QRAlarmManager.clearAllAlarms(this);
     }
 
-    public void saveInFolder(View v ) {
+    //public void saveInFolder(View v ) {
         QRAlarmManager.registerSavedAlarm(this);
-    }
+    }*/
 
 
     @Override
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
-        QRAlarmManager.stopSerivce(this);
+        QRAlarmManager.stopService(this);
 
     }
 

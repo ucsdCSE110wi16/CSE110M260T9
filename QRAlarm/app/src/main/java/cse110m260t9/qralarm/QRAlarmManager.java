@@ -19,34 +19,91 @@ public class QRAlarmManager extends IntentService{
 
     public static final String ALARM_KEY = "QR_ALARM_MANAGER_ALARM_KEY";
     public static final String DELETE_ALARMS = "QR_ALARM_MANAGER_DELETE_ALL";
+
+    /**
+     * Default Constructor
+     * -- DO NOT CALL DIRECTLY --
+     */
     public QRAlarmManager() {
         super("QRAlarmManager");
     }
+
+    // ------------- Overloaded Functions -------------
 
     @Override public void onCreate() {
         super.onCreate();
         alarmList = new ArrayList<>();
         broadCastIDs = new ArrayList<>();
     }
-
     @Override public void onHandleIntent(Intent intent) {
         if( intent.hasExtra(ALARM_KEY)) {
             Alarm alarm = (Alarm) intent.getSerializableExtra(ALARM_KEY);
             _registerAlarm(this, alarm);
         }
         if( intent.hasExtra(DELETE_ALARMS))
-            _deleteAllAlarms(this);
-        if( intent.hasExtra("Testing Serial")) {
-            AlarmIO.deleteAllAlarms(this);
-        }
-
-
+            _clearAllAlarms(this);
     }
-
     @Override public int onStartCommand(Intent intent, int flag, int startID) {
         onHandleIntent(intent);
         return 0;
     }
+
+    // ------------- Public Static Functions -------------
+
+    /**
+     * Function Name: clearAllAlarms()
+     * Description: This function clears all the Pending Alarm Intnets from the built-in
+     *              Android Alarm Manager.
+     * @param ctx
+     */
+    public static void clearAllAlarms(Context ctx) {
+        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
+        alarmManager.putExtra(QRAlarmManager.DELETE_ALARMS, true);
+        ctx.startService(alarmManager);
+    }
+
+    /**
+     * Function Name: registerAlarm()
+     * Description: This function registers an alarm with the QRAlarmManager service
+     * @param ctx
+     * @param alarm
+     */
+    public static void registerAlarm(Context ctx, Alarm alarm ) {
+        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
+        alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
+        ctx.startService(alarmManager);
+    }
+
+    /**
+     * Function Name: reloadAlarms()
+     * Description: This function loads all saved alarms and registers them with the QRAlarmManager
+     *              service
+     * @param ctx
+     */
+    public static void reloadAlarms(Context ctx ) {
+        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(ctx);
+        AlarmIO.deleteAllAlarms(ctx);
+        for(Alarm alm : alarms )
+            if(alm.daysAlarmShouldFire.size() > 0)
+                registerAlarm(ctx, alm);
+
+    }
+
+    /**
+     * Function Name: stopService()
+     * Description: This function stops the QRAlarmManager service from running
+     * WARNING: This function should only be called when the application is about to close
+     *          Calling this function prematurely will result in loosing references to cached alarms
+     * @param ctx
+     */
+    public static void stopService(Context ctx) {
+        ctx.stopService(new Intent(ctx, QRAlarmManager.class));
+    }
+
+
+
+    // ------------- Private Functions -------------
+
 
     /**
      * Function Name: _registerAlarm()
@@ -67,6 +124,14 @@ public class QRAlarmManager extends IntentService{
 
     }
 
+    /**
+     * Function Name: _registerAlarm()
+     * Description: This function registers an Alarm to fire with the built-in Android Alarm
+     *              Manager. The time and ID by which this alarm will fire is determined by
+     *              the Calendar time.
+     * @param ctx
+     * @param time
+     */
     private void _registerAlarm(Context ctx, Calendar time ) {
         System.out.println("Registering alarm: ");
         System.out.println(time);
@@ -79,7 +144,13 @@ public class QRAlarmManager extends IntentService{
         broadCastIDs.add(broadCastID);
     }
 
-    private void _deleteAllAlarms(Context ctx) {
+    /**
+     * Function Name: _clearAllAlarms()
+     * Description: This function clears all the Pending Alarm Intnets from the built-in
+     *              Android Alarm Manager
+     * @param ctx
+     */
+    private void _clearAllAlarms(Context ctx) {
         System.out.println("Before clearing Broadcast IDs: " + broadCastIDs);
         for(Integer id : broadCastIDs ) {
             PendingIntent operation = PendingIntent.getBroadcast(
@@ -93,37 +164,7 @@ public class QRAlarmManager extends IntentService{
         alarmList.clear();
     }
 
-    public static void deleteAllAlarms(Context ctx ) {
-        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
-        alarmManager.putExtra(QRAlarmManager.DELETE_ALARMS, true);
-        ctx.startService(alarmManager);
-    }
 
-    public static void registerAlarm(Context ctx, Alarm alarm ) {
-        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
-        alarmManager.putExtra(QRAlarmManager.ALARM_KEY, alarm);
-        ctx.startService(alarmManager);
-    }
-
-    public static void reloadAlarms(Context ctx ) {
-        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(ctx);
-        AlarmIO.deleteAllAlarms(ctx);
-        for(Alarm alm : alarms )
-            if(alm.daysAlarmShouldFire.size() > 0)
-                registerAlarm(ctx, alm);
-
-    }
-
-    public static void registerSavedAlarm(Context ctx ) {
-        Intent alarmManager = new Intent(ctx, QRAlarmManager.class);
-        alarmManager.putExtra("Testing Serial", true);
-        ctx.startService(alarmManager);
-    }
-
-
-    public static void stopSerivce(Context ctx) {
-        ctx.stopService(new Intent(ctx, QRAlarmManager.class));
-    }
 
 
 }

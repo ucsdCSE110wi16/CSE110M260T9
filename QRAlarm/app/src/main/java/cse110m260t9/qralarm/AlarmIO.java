@@ -38,7 +38,7 @@ public class AlarmIO {
     }
     public static Alarm loadAlarm( Context ctx, File inFile) {
         byte[] bytes = FileIO.retrieveByteArrayFromFile( inFile, ctx);
-        return Alarm.fromSerializedString(bytes);
+        return Alarm.fromSerializedBytes(bytes);
     }
 
     public static void saveAlarm( Context ctx, Alarm alm ) {
@@ -47,7 +47,7 @@ public class AlarmIO {
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(outFile);
-            fos.write(alm.getSerializedString());
+            fos.write(alm.getSerializedBytes());
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
