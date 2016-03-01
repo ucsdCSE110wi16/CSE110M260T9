@@ -120,7 +120,7 @@ public class Alarm implements Serializable{
         return rv;
     }
 
-    private static int calculateDayDifference( int currentDay, int futureDay ) {
+    public static int calculateDayDifference( int currentDay, int futureDay ) {
         int delta = currentDay - futureDay;
         return delta < 0 ? Math.abs(delta) : 7-delta;
     }
