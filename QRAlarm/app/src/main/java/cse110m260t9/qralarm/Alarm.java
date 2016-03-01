@@ -99,7 +99,6 @@ public class Alarm implements Serializable{
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println("Serialized String: " + rv);
         return rv;
     }
 
