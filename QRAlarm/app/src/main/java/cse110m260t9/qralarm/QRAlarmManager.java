@@ -16,10 +16,9 @@ import java.util.Calendar;
 public class QRAlarmManager extends IntentService{
     private ArrayList<Alarm> alarmList;
     private ArrayList<Integer> broadCastIDs;
-    private final int ALARM_BUFFER = 2000;
+
     public static final String ALARM_KEY = "QR_ALARM_MANAGER_ALARM_KEY";
     public static final String DELETE_ALARMS = "QR_ALARM_MANAGER_DELETE_ALL";
-    private byte[] lastAlarmSerial = null;
     public QRAlarmManager() {
         super("QRAlarmManager");
     }

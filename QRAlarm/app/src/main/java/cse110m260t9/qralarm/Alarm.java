@@ -31,6 +31,7 @@ public class Alarm implements Serializable{
 
 
 
+
     /**
      * Primary Constructor
      * @param name <- The name of the alarm
@@ -105,16 +106,14 @@ public class Alarm implements Serializable{
         ArrayList<Calendar> rv = new ArrayList<>();
         for(Integer day : daysAlarmShouldFire ) {
             System.out.println("Day is: " + day);
-            Calendar alarmClone = Calendar.getInstance();
+            Calendar alarmClone = isRepeating ? Calendar.getInstance():(Calendar)alarmTime.clone();
             alarmClone.set(alarmClone.HOUR_OF_DAY, alarmTime.get(alarmTime.HOUR_OF_DAY));
             alarmClone.set(alarmClone.MINUTE, alarmTime.get(alarmTime.MINUTE));
             alarmClone.set(alarmClone.SECOND, alarmTime.get(alarmTime.SECOND));
             alarmClone.set(alarmClone.MILLISECOND, alarmTime.get(alarmTime.MILLISECOND));
-            // If the alarm is set for today
+            // If the alarm isn't set for today
             if (day != alarmClone.get(alarmClone.DAY_OF_WEEK))
                 alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day));
-
-
             rv.add(alarmClone);
         }
         System.out.println("Finished processing Alarm: " + this);
