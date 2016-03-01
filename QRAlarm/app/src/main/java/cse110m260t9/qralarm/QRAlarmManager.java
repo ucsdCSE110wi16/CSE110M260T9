@@ -38,11 +38,6 @@ public class QRAlarmManager extends IntentService{
         if( intent.hasExtra(DELETE_ALARMS))
             _deleteAllAlarms(this);
         if( intent.hasExtra("Testing Serial")) {
-            //Alarm alarm = AlarmIO.loadTestAlarm(this);
-            //System.out.println("Testing Serialization");
-            //System.out.println("Serialized String: " + lastAlarmSerial);
-            //System.out.println("Reconstructed alarm: " + alarm);
-            //_registerAlarm(this, alarm);
             AlarmIO.deleteAllAlarms(this);
         }
 
@@ -61,28 +56,13 @@ public class QRAlarmManager extends IntentService{
      * @param ctx
      */
     private void _registerAlarm(Context ctx, Alarm alarm) {
-        Calendar instance = Calendar.getInstance();
+
+        if(alarm == null)
+            return;
         alarmList.add(alarm);
-        int today = instance.get(instance.DAY_OF_WEEK);
-        for(Integer day : alarm.daysAlarmShouldFire ) {
-            System.out.println("Day is: " + day);
-            Calendar alarmClone = (Calendar)alarm.alarmTime.clone();
-            // If the alarm is set for today
-            if( day == alarmClone.get(alarmClone.DAY_OF_WEEK)) {
-                // If the alarm should occur later in the week
-                if(instance.getTimeInMillis() > alarmClone.getTimeInMillis() + ALARM_BUFFER )
-                    alarmClone.add(Calendar.DAY_OF_WEEK, 7);
-                // If this condition doesn't hold, then we can assume the alarm will happen later
-                // in the day. The alarm clone should already be set to this value
-            }
-            // If the alarm is set to happen later during the week
-            else
-                alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day) );
-            if( alarmClone.getTimeInMillis() > instance.getTimeInMillis() )
-                _registerAlarm(ctx, alarmClone);
-            else
-                alarm.daysAlarmShouldFire.remove(day);
-            alarm.broadcastTimes.add(alarmClone.getTimeInMillis());
+        for(Calendar cal : alarm.getAlarmAsCalendarList()) {
+            _registerAlarm(ctx, cal);
+            alarm.broadcastTimes.add(cal.getTimeInMillis());
         }
         AlarmIO.saveAlarm(this, alarm);
 
@@ -128,8 +108,10 @@ public class QRAlarmManager extends IntentService{
 
     public static void reloadAlarms(Context ctx ) {
         ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(ctx);
+        AlarmIO.deleteAllAlarms(ctx);
         for(Alarm alm : alarms )
             registerAlarm(ctx, alm);
+
     }
 
     public static void registerSavedAlarm(Context ctx ) {
@@ -143,8 +125,5 @@ public class QRAlarmManager extends IntentService{
         ctx.stopService(new Intent(ctx, QRAlarmManager.class));
     }
 
-    private static int calculateDayDifference( int currentDay, int futureDay ) {
-        int delta = currentDay - futureDay;
-        return delta < 0 ? Math.abs(delta) : 7-delta;
-    }
+
 }

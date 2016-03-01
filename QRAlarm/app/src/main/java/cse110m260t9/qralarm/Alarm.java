@@ -76,6 +76,44 @@ public class Alarm implements Serializable{
         return rv.replace(";", "").replace(",", "");
     }
 
+    private void purgeOldAlarms() {
+        if(isRepeating)
+            return;
+
+    }
+
+    public ArrayList<Calendar> getAlarmAsCalendarList() {
+        Calendar instance = Calendar.getInstance();
+        System.out.println("Processing Alarm: " + this);
+        int today = instance.get(instance.DAY_OF_WEEK);
+        ArrayList<Calendar> rv = new ArrayList<>();
+        for(Integer day : daysAlarmShouldFire ) {
+            System.out.println("Day is: " + day);
+            Calendar alarmClone = Calendar.getInstance();
+            alarmClone.set(alarmClone.HOUR_OF_DAY, alarmTime.get(alarmTime.HOUR_OF_DAY));
+            alarmClone.set(alarmClone.MINUTE, alarmTime.get(alarmTime.MINUTE));
+            alarmClone.set(alarmClone.SECOND, alarmTime.get(alarmTime.SECOND));
+            // If the alarm is set for today
+            if (day == alarmClone.get(alarmClone.DAY_OF_WEEK)) {
+                // If the alarm should occur later in the week
+                if (instance.getTimeInMillis() > alarmClone.getTimeInMillis() + 2000)
+                    alarmClone.add(Calendar.DAY_OF_WEEK, 7);
+                // If this condition doesn't hold, then we can assume the alarm will happen later
+                // in the day. The alarm clone should already be set to this value
+            }
+            // If the alarm is set to happen later during the week
+            else
+                alarmClone.add(Calendar.DAY_OF_WEEK, calculateDayDifference(today, day));
+            rv.add(alarmClone);
+        }
+        System.out.println("Finished processing Alarm: " + this);
+        return rv;
+    }
+
+    private static int calculateDayDifference( int currentDay, int futureDay ) {
+        int delta = currentDay - futureDay;
+        return delta < 0 ? Math.abs(delta) : 7-delta;
+    }
     @Override public String toString() {
         String rv = "Alarm name: " + this.name;
         rv += "\nDays: [ ";
