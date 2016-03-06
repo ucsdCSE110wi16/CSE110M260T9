@@ -36,6 +36,8 @@ public class CreateAlarmTest {
     @Test
     public void changeText_sameActivity() {
         // Type text and then press the button.
+        onView(withId(R.id.newAlarmButton))
+                .perform(click());
         /**onView(withId(R.id.editTextUserInput))
                 .perform(typeText(mStringToBetyped), closeSoftKeyboard());
         onView(withId(R.id.changeTextBt)).perform(click());
