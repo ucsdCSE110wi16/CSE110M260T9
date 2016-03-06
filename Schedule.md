@@ -78,24 +78,40 @@ Add feature to alarm to check if there is a home location currently set, if so c
 we are in proximity of that location.
 Priority 2 3 Days
 
-Week 9
+Week 9 
 ------
-Allow the user to print out a QR Code<br>
-Priority 2 2 Days
+###Development
+<del>Allow the user to print out a QR Code<br>
+Priority 2 2 Days</del> <b>[DEPRECATED]</b>
 
 List of alarms on main page<br>
 Priority 1 3 Days
 
-Add feature to alarm to check if there is a home location currently set, if so check to see if
+<del>Add feature to alarm to check if there is a home location currently set, if so check to see if
 we are in proximity of that location.
-Priority 2 3 Days
+Priority 2 3 Days</del>
 
-Play normal alarm if not in house range<br>
-Priority 1 3 Days
+<del>Play normal alarm if not in house range<br>
+Priority 1 3 Days</del>
 
 Get rid of the damn activity titles<br>
 Priority 3 1 Days
 
-Week 10-11
-------
-TESTING 
+####Testing
+
+#####TDD
+<del>Alarm</del><br>
+AlarmIO<br>
+QRScannerActivity<br>
+QRScannerActivity<br>
+MapsActivity<br>
+
+
+#####BDD
+Given that the phone screen is off, the alarm will ring and wake up the phone<br>
+
+Given that you are in the home location, the alarm will use the QR Code<br>
+
+Given that you are outside the home location, the alarm will use a normal alarm<br>
+
+Given that there are some saved alarms, and one alarm goes off, the other saved alarms are not tempered with<br>
