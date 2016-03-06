@@ -112,4 +112,24 @@ public class AlarmTester {
         assertEquals(mon.getTimeInMillis(), calendars.get(0).getTimeInMillis());
     }
 
+    @Test
+    public void TestRepeatingAlarm() {
+        int day = today.get(Calendar.DAY_OF_WEEK);
+        Calendar mon = (Calendar)today.clone();
+        if(day != Calendar.MONDAY)
+            mon.add(Calendar.DAY_OF_WEEK, Alarm.calculateDayDifference(day, Calendar.MONDAY));
+        Alarm alm = new Alarm("Monday", today, monday, true);
+        // Test for all the weeks in the year
+        for( int week = 1; week < 52; week++) {
+            mon.add(Calendar.DAY_OF_WEEK, 7);
+            Calendar futureDay = Calendar.getInstance();
+            futureDay.add(Calendar.DAY_OF_WEEK, 7 * week );
+            ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList(futureDay);
+            System.out.println(mon);
+            System.out.println(calendars.get(0));
+            assertEquals(mon.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+        }
+
+    }
+
 }

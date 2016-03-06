@@ -154,14 +154,14 @@ public class Alarm implements Serializable{
      *              should fire.
      * @return
      */
-    public ArrayList<Calendar> getAlarmAsCalendarList() {
-        Calendar instance = Calendar.getInstance();
+    public ArrayList<Calendar> getAlarmAsCalendarList(Calendar instance) {
+
         System.out.println("Processing Alarm: " + this);
         int today = instance.get(instance.DAY_OF_WEEK);
         ArrayList<Calendar> rv = new ArrayList<>();
         for(Integer day : daysAlarmShouldFire ) {
             System.out.println("Day is: " + day);
-            Calendar alarmClone = isRepeating ? Calendar.getInstance():(Calendar)alarmTime.clone();
+            Calendar alarmClone = isRepeating ? (Calendar)instance.clone():(Calendar)alarmTime.clone();
             alarmClone.set(alarmClone.HOUR_OF_DAY, alarmTime.get(alarmTime.HOUR_OF_DAY));
             alarmClone.set(alarmClone.MINUTE, alarmTime.get(alarmTime.MINUTE));
             alarmClone.set(alarmClone.SECOND, alarmTime.get(alarmTime.SECOND));
@@ -173,6 +173,11 @@ public class Alarm implements Serializable{
         }
         System.out.println("Finished processing Alarm: " + this);
         return rv;
+    }
+
+
+    public ArrayList<Calendar> getAlarmAsCalendarList() {
+        return getAlarmAsCalendarList(Calendar.getInstance());
     }
 
     /**
