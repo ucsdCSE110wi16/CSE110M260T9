@@ -90,27 +90,64 @@ public class AlarmTester {
         assertTrue(alm.broadcastTimes.size() == 0);
     }
 
+
+
+    @Test
+    public void TestAlarmSetOnMonday() {
+        Calendar mon = GetCalendarForDay(Calendar.MONDAY);
+        Alarm alm = new Alarm("Monday", today, monday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(mon.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
     @Test
     public void TestAlarmSetOnTuesday() {
-        int day = today.get(Calendar.DAY_OF_WEEK);
-        Calendar tue = (Calendar)today.clone();
-        if(day != Calendar.TUESDAY)
-            tue.add(Calendar.DAY_OF_WEEK, Alarm.calculateDayDifference(day, Calendar.TUESDAY));
+        Calendar tue = GetCalendarForDay(Calendar.TUESDAY);
         Alarm alm = new Alarm("Tuesday", today, tuesday, false);
         ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
         assertEquals(tue.getTimeInMillis(), calendars.get(0).getTimeInMillis());
     }
 
     @Test
-    public void TestAlarmSetOnMonday() {
-        int day = today.get(Calendar.DAY_OF_WEEK);
-        Calendar mon = (Calendar)today.clone();
-        if(day != Calendar.MONDAY)
-            mon.add(Calendar.DAY_OF_WEEK, Alarm.calculateDayDifference(day, Calendar.MONDAY));
-        Alarm alm = new Alarm("Monday", today, monday, false);
+    public void TestAlarmSetOnWednesday() {
+        Calendar wed = GetCalendarForDay(Calendar.WEDNESDAY);
+        Alarm alm = new Alarm("Wednesday", today, wednesday, false);
         ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
-        assertEquals(mon.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+        assertEquals(wed.getTimeInMillis(), calendars.get(0).getTimeInMillis());
     }
+
+    @Test
+    public void TestAlarmSetOnThursday() {
+        Calendar thurs = GetCalendarForDay(Calendar.THURSDAY);
+        Alarm alm = new Alarm("Thursday", today, thursday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(thurs.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
+    @Test
+    public void TestAlarmSetOnFriday() {
+        Calendar fri = GetCalendarForDay(Calendar.FRIDAY);
+        Alarm alm = new Alarm("Friday", today, friday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(fri.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
+    @Test
+    public void TestAlarmSetOnSaturday() {
+        Calendar tue = GetCalendarForDay(Calendar.SATURDAY);
+        Alarm alm = new Alarm("Saturday", today, saturday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(tue.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
+    @Test
+    public void TestAlarmSetOnSunday() {
+        Calendar tue = GetCalendarForDay(Calendar.SUNDAY);
+        Alarm alm = new Alarm("Sunday", today, sunday, false);
+        ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
+        assertEquals(tue.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
 
     @Test
     public void TestRepeatingAlarm() {
@@ -130,6 +167,14 @@ public class AlarmTester {
             assertEquals(mon.getTimeInMillis(), calendars.get(0).getTimeInMillis());
         }
 
+    }
+
+    private Calendar GetCalendarForDay( int dayOfWeek ) {
+        int day = today.get(Calendar.DAY_OF_WEEK);
+        Calendar rv = (Calendar)today.clone();
+        if(day != dayOfWeek)
+            rv.add(Calendar.DAY_OF_WEEK, Alarm.calculateDayDifference(day, dayOfWeek));
+        return rv;
     }
 
 }
