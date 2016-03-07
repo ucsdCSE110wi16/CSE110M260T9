@@ -43,7 +43,7 @@ public class EditAlarm extends AppCompatActivity {
         }
     }
 
-    
+
 
     public void cancelAlarm(View v) {
         this.finish();

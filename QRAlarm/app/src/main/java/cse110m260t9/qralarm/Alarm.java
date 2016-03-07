@@ -131,7 +131,9 @@ public class Alarm implements Serializable{
             return;
         System.out.println("Entering purge function");
         Calendar today = Calendar.getInstance();
+        System.out.println("Purge on day: " + today);
         for(Calendar cal : getAlarmAsCalendarList() ) {
+            System.out.println("Testing to see if should purge: " + cal);
             if( cal.getTimeInMillis() < today.getTimeInMillis() )
             {
                 System.out.println("I should purge here");

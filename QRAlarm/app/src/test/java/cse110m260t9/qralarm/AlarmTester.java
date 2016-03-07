@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -146,6 +147,17 @@ public class AlarmTester {
         Alarm alm = new Alarm("Sunday", today, sunday, false);
         ArrayList<Calendar> calendars = alm.getAlarmAsCalendarList();
         assertEquals(tue.getTimeInMillis(), calendars.get(0).getTimeInMillis());
+    }
+
+    @Test
+    public void TestPurgeOnReserialization() {
+        ArrayList<Integer> todayL = new ArrayList<>();
+        todayL.add(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+        Alarm alm = new Alarm("Moo", today, todayL, false);
+        assertEquals(1,alm.getAlarmAsCalendarList().size());
+        byte[] bytes = alm.getSerializedBytes();
+        Alarm newAlm = Alarm.fromSerializedBytes(bytes);
+        assertEquals(0,newAlm.getAlarmAsCalendarList().size());
     }
 
 

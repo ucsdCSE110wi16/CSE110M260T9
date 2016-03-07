@@ -53,15 +53,15 @@
         //TODO: DON'T HARDCODE THE LABEL, MAKE IT A RESOURCE
         <activity
             android:name=".QRScannerActivity"
-            android:label="QRScannerActivity"
             android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".SnoozeChoice"
+
             android:label="SnoozeChoice"
             android:theme="@style/Theme.AppCompat"
             android:screenOrientation="portrait"
-            android:hardwareAccelerated ="false">
-        </activity>
+            android:hardwareAccelerated ="false"/>
+
 
         <receiver
             android:name=".AlarmReceiver"

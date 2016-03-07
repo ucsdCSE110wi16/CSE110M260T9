@@ -24,8 +24,12 @@ public class AlarmIO {
     public static ArrayList<Alarm> getAllAlarms(Context ctx ) {
         File[] files = getAllAlarmFiles(ctx);
         ArrayList<Alarm> alarms = new ArrayList<>();
-        for(File f : files )
-            alarms.add( loadAlarm(ctx, f) );
+        for(File f : files ) {
+            Alarm alm = loadAlarm(ctx, f);
+            System.out.println("Calendar list size: " + alm.getAlarmAsCalendarList().size());
+            if( alm.getAlarmAsCalendarList().size() > 0)
+                alarms.add(alm);
+        }
         return alarms;
     }
 

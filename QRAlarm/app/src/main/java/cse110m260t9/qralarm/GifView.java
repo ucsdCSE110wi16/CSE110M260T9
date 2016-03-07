@@ -1,3 +1,7 @@
+/**
+ * source code from indragni soft solutions
+ * found at https://www.youtube.com/watch?v=vZonJM5z_Pc
+ */
 package cse110m260t9.qralarm;
 
 import android.content.Context;

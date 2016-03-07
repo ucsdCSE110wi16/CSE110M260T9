@@ -4,20 +4,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     tools:context=".MainActivity"
-    style="@style/Base.ThemeOverlay.AppCompat.Dark">
-
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-
-        <ListView
-            android:id="@+id/navList"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="#aaaaaa"/>
-    </android.support.v4.widget.DrawerLayout>
+    style="@style/Base.ThemeOverlay.AppCompat.Dark"
+    android:id="@+id/mainActivityLayout">
 
     <!--Button
         android:layout_width="wrap_content"
@@ -28,7 +16,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:enabled="true"/>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,8 +28,6 @@
     <Button
         android:enabled="true"
         android:id="@+id/newAlarmButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:onClick="newAlarm"
@@ -50,18 +35,42 @@
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textStyle="normal"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/newAlarmButton"
+        android:elevation="0dp">
+
+        <ListView
+            android:id="@+id/navList"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#aaaaaa"
+            android:elevation="-1dp" />
+    </android.support.v4.widget.DrawerLayout>
 
     <ScrollView
         android:id="@+id/mainScrollView"
-        android:layout_below="@+id/newAlarmButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/newAlarmButton">
 
         <RelativeLayout
             android:id="@+id/rlAlarmList"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"></RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_alignParentStart="true">
+
+        </RelativeLayout>
     </ScrollView>
 
 </RelativeLayout>
