@@ -112,9 +112,10 @@ Priority 1 1 Day</del>
 
 <del>Given that the phone screen is off, the alarm will ring and wake up the phone</del><br>
 
-Given that you are in the home location, the alarm will use the QR Code<br>
+<del>Given that you are in the home location, the alarm will use the QR Code</del><br>
 
-Given that you are outside the home location, the alarm will use a normal alarm<br>
+<del>Given that you are outside the home location, the alarm will use a normal alarm</del><br>
 
-Given that there are some saved alarms, and one alarm goes off, the other saved alarms are not tempered with<br>
+<del>Given that there are some saved alarms, and one alarm goes off, the other saved alarms are not tempered with</del><b>[DEPRECATED]</b>
+<br>
 
