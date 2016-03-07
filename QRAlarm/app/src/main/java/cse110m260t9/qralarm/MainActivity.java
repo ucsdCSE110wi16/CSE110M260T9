@@ -24,6 +24,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,20 +69,32 @@ public class MainActivity extends AppCompatActivity {
 
         initNavDrawer();
 
-        QRAlarmManager.reloadAlarms(this);
-        this.alarms = AlarmIO.getAllAlarms(this);
-        this.displayAlarms();
+        //QRAlarmManager.reloadAlarms(this);
+        displayAlarms();
+        System.out.println("Today's Calendar is " + Calendar.getInstance());
     }
 
     private void displayAlarms() {
+        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(this);
         RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
-        for(Alarm alarm : this.alarms) {
+        View previousView = null;
+        System.out.println("Alarm list size: " + alarms.size());
+        for(int i = 0; i < alarms.size(); i++) {
+            RelativeLayout.LayoutParams rules = getNewParams();
+            if( previousView != null )
+                rules.addRule(RelativeLayout.BELOW, i-1);
             TextView textView = new TextView(this);
-            textView.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-            textView.setText(alarm.toString());
+            textView.setLayoutParams(rules);
+            textView.setText(alarms.get(i).toString());
+            textView.setId(i);
+            previousView = textView;
             relativeLayout.addView(textView);
         }
+    }
+    private RelativeLayout.LayoutParams getNewParams() {
+        return new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
