@@ -77,7 +77,7 @@ public class SnoozeChoice extends AppCompatActivity {
                 String snoozeToastText = "Snoozing: " + MyConstants.SNOOZE_TIME_STR + " remaining";
                 Log.i("snoozeTag", "Location services connected.");
                 Toast.makeText(SnoozeChoice.this,
-                        snoozeToastText, Toast.LENGTH_SHORT).show();
+                        snoozeToastText, Toast.LENGTH_LONG).show();
                 SnoozeChoice.this.startActivity(goBack);
             }
         });
