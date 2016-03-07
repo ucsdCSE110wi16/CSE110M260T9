@@ -90,18 +90,21 @@ public class MainActivity extends AppCompatActivity {
             if( previousView != null )
                 rules.addRule(RelativeLayout.BELOW, i-1);
             Button button = new Button(this);
+            final View b = button;
             final Alarm alarm = this.alarms.get(i-1);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    System.out.println("I should be deleting something!");
                     for (long l : alarm.broadcastTimes) {
                         PendingIntent pi = PendingIntent.getBroadcast(
                                 MainActivity.this, (int) (l % Integer.MAX_VALUE), new Intent(MainActivity.this, AlarmReceiver.class), 0);
                         AlarmManager alarmManager = (AlarmManager) MainActivity.this.getSystemService(Context.ALARM_SERVICE);
                         alarmManager.cancel(pi);
-                        alarmLayoutList.removeView(v);
-                        AlarmIO.deleteAlarm(MainActivity.this,alarm);
-                        System.out.println("I should be deleting something!");
+                        alarmLayoutList.removeView(b);
+                        alarms.remove(alarm);
+                        AlarmIO.deleteAlarm(MainActivity.this, alarm);
+                        displayAlarms();
                     }
                 }
             });

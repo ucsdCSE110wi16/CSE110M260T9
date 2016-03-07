@@ -51,6 +51,9 @@ public class EditAlarm extends AppCompatActivity {
     public void saveAlarm(View v) {
         Alarm alarm = createAlarmFromUserInput(v);
         QRAlarmManager.registerAlarm(this,alarm);
+        for(Calendar cal : alarm.getAlarmAsCalendarList() ) {
+            alarm.broadcastTimes.add(cal.getTimeInMillis());
+        }
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);
