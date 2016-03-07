@@ -19,7 +19,7 @@ public class Snooze extends AppCompatActivity {
         PendingIntent operation = PendingIntent.getBroadcast(
                 ctx, 0, new Intent(ctx, AlarmReceiver.class), 0);
         Calendar calendar = Calendar.getInstance();
-        long triggerAtMillis = calendar.getTimeInMillis() + 10 * 1000;
+        long triggerAtMillis = calendar.getTimeInMillis() + MyConstants.SNOOZE_TIME;
         AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis , operation);
 

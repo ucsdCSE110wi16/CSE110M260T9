@@ -43,11 +43,10 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
+        android:id="@+id/alarmScrollView"
         android:layout_below="@+id/llhExitButtons"
-        android:fillViewport="false">
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
         <RelativeLayout
             android:layout_height="wrap_content"

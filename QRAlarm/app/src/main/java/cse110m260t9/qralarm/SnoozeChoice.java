@@ -6,8 +6,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -37,36 +39,31 @@ public class SnoozeChoice extends AppCompatActivity {
         ringtone = RingtoneManager.getRingtone(this, uri);
         ringtone.play();
 
-        Button b1 = (Button) findViewById(R.id.button);
+        Button b1 = (Button) findViewById(R.id.turnAlarmOff);
         Button b2 = (Button) findViewById(R.id.button2);
 
         if(MainActivity.IsAtHome()) {
-
             b1.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     Intent turnItOff = new Intent(SnoozeChoice.this, QRScannerActivity.class);
-
                     SnoozeChoice.this.startActivity(turnItOff);
-
                 }
             });
         } else {
 
-            b1.setText("Turn off Alarm");
-
+            b1.setText(R.string.turn_off_alarm);
             b1.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     ringtone.stop();
-
                     startActivity(new Intent(SnoozeChoice.this, MainActivity.class));
-
                 }
             });
         }
+
 
         b2.setOnClickListener(new View.OnClickListener() {
 
@@ -76,6 +73,11 @@ public class SnoozeChoice extends AppCompatActivity {
                 bro.goSnooze(SnoozeChoice.this);
                 Intent goBack = new Intent(SnoozeChoice.this, MainActivity.class);
                 ringtone.stop();
+
+                String snoozeToastText = "Snoozing: " + MyConstants.SNOOZE_TIME_STR + " remaining";
+                Log.i("snoozeTag", "Location services connected.");
+                Toast.makeText(SnoozeChoice.this,
+                        snoozeToastText, Toast.LENGTH_SHORT).show();
                 SnoozeChoice.this.startActivity(goBack);
             }
         });

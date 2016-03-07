@@ -90,6 +90,8 @@ public class FileIO {
     public static String retrieveStringFromFile( String fileName, Context ctx ) {
         String retVal = "";
         byte[] bytes = retrieveByteArrayFromFile(fileName,ctx);
+        if(bytes == null)
+            return retVal;
         for( byte b: bytes)
             retVal += (char)b;
         return retVal;

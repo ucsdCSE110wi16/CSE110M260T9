@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    tools:context=".MainActivity"
+    style="@style/Base.ThemeOverlay.AppCompat.Dark">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <ListView
+            android:id="@+id/navList"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#aaaaaa"/>
+    </android.support.v4.widget.DrawerLayout>
+
+    <!--Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dump Alarms"
+        android:id="@+id/button"
+        android:onClick="clearAlarms"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:enabled="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Test"
+        android:id="@+id/saveButton"
+        android:layout_alignTop="@+id/button"
+        android:layout_alignParentStart="true"
+        android:onClick="saveInFolder" /-->
+
+    <Button
+        android:enabled="true"
+        android:id="@+id/newAlarmButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        style="@style/Base.ThemeOverlay.AppCompat.Dark">
+        android:onClick="newAlarm"
+        android:text="@string/newAlarmButtonText"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textStyle="normal"
+        android:typeface="normal" />
 
-        <Button
-            android:enabled="true"
-            android:id="@+id/newAlarmButton"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+    <ScrollView
+        android:id="@+id/mainScrollView"
+        android:layout_below="@+id/newAlarmButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlAlarmList"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:onClick="newAlarm"
-            android:text="@string/newAlarmButtonText"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textStyle="normal"
-            android:typeface="normal" />
+            android:layout_width="match_parent"></RelativeLayout>
+    </ScrollView>
 
-        <!--Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dump Alarms"
-            android:id="@+id/button"
-            android:onClick="clearAlarms"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:enabled="true"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save Test"
-            android:id="@+id/saveButton"
-            android:layout_alignTop="@+id/button"
-            android:layout_alignParentStart="true"
-            android:onClick="saveInFolder" /-->
-
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/navList"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left|start"
-        android:background="#aaaaaa"/>
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

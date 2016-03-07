@@ -38,12 +38,6 @@ public class CreateAlarmTest {
         // Type text and then press the button.
         onView(withId(R.id.newAlarmButton))
                 .perform(click());
-        /**onView(withId(R.id.editTextUserInput))
-                .perform(typeText(mStringToBetyped), closeSoftKeyboard());
-        onView(withId(R.id.changeTextBt)).perform(click());
 
-        // Check that the text was changed.
-        onView(withId(R.id.textToBeChanged))
-                .check(matches(withText(mStringToBetyped)));**/
     }
 }

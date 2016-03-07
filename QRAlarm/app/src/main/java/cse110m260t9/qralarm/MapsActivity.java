@@ -110,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             textLocation.setVisibility(View.GONE);
             buttonYes.setVisibility(View.GONE);
             buttonNo.setVisibility(View.GONE);
-            latLng = convertStringToLatLng(intent.getStringExtra("Location"));
+            latLng = convertStringToLatLng(intent.getStringExtra(MyConstants.CURR_LOCATION));
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
