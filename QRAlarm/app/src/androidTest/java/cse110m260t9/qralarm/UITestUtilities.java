@@ -10,6 +10,9 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
+import android.util.Log;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 
@@ -27,6 +30,9 @@ public class UITestUtilities {
     private static final String turnAlarmOffID = "cse110m260t9.qralarm:id/turnAlarmOff";
     private static final String newAlarmButtonID = "cse110m260t9.qralarm:id/newAlarmButton";
     private static final String saveAlarmButtonID = "cse110m260t9.qralarm:id/saveButtonAlarm";
+    private static final String mainPageNavList = "cse110m260t9.qralarm:id/navList";
+    private static final String mapsYes = "cse110m260t9.qralarm:id/buttonYes";
+
 
     public static void startMainActivityFromHomeScreen(UiDevice device) {
 
@@ -108,5 +114,14 @@ public class UITestUtilities {
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setHomeLocation(){
+        mDevice.click(5,5);
+        Log.i("yes", "hello");
+        UiObject yes = mDevice.findObject(new UiSelector()
+                .resourceId(mapsYes));
+        clickButton(yes);
+        Log.i("yes", "hello1");
     }
 }

@@ -28,14 +28,8 @@ import static org.hamcrest.core.IsNull.notNullValue;
  */
 @RunWith(AndroidJUnit4.class)
 public class UIAutomatorCreateAlarmTest {
-    private static final String CSE110M260T9_QRALARM
-            = "cse110m260t9.qralarm";
-    private static final int LAUNCH_TIMEOUT = 2000;
-    private UiDevice mDevice;
-    private static final String turnAlarmOffID = "cse110m260t9.qralarm:id/turnAlarmOff";
-    private static final String newAlarmButtonID = "cse110m260t9.qralarm:id/newAlarmButton";
-    private static final String saveAlarmButtonID = "cse110m260t9.qralarm:id/saveButtonAlarm";
 
+    private UiDevice mDevice;
 
     @Before
     public void startMainActivityFromHomeScreen() {
