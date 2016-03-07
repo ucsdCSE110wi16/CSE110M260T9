@@ -73,15 +73,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //private variable to store location
     private LatLng latLng;
 
-    private static final long MINIMUM_DISTANCECHANGE_FOR_UPDATE = 1; // in Meters
-    private static final long MINIMUM_TIME_BETWEEN_UPDATE = 1000; // in Milliseconds
-    private static final long POINT_RADIUS = 100; // in Meters
-    private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
-
     private LocationManager locationManager;
 
-    private ProximityIntentReceiver proximityIntentReceiver;
-    private IntentFilter filter;
 
 
     @Override
@@ -126,8 +119,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) //we can use lower if needed
-                .setInterval(10 * MINIMUM_TIME_BETWEEN_UPDATE) //set interval to 10 seconds
-                .setFastestInterval(1 * MINIMUM_TIME_BETWEEN_UPDATE); //set fastest interval to 1 second
+                .setInterval(10 * MyConstants.MINIMUM_TIME_BETWEEN_UPDATE) //set interval to 10 seconds
+                .setFastestInterval(1 * MyConstants.MINIMUM_TIME_BETWEEN_UPDATE); //set fastest interval to 1 second
     }
 
 
@@ -268,20 +261,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Intent intent = new Intent(MyConstants.PROX_ALERT_FLAG);
         Intent intent = new Intent(this, ProximityIntentReceiver.class);
-        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent,
+                                                                 PendingIntent.FLAG_CANCEL_CURRENT);
 
         if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
             locationManager.addProximityAlert(
                     latLng.latitude, // the latitude of the central point of the alert region
                     latLng.longitude, // the longitude of the central point of the alert region
-                    POINT_RADIUS, // the radius of the central point of the alert region, in meters
-                    PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
+                    MyConstants.POINT_RADIUS, // the radius of the central point of the alert region, in meters
+                    MyConstants.PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
                     proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
             );
 
             //IntentFilter filter = new IntentFilter(MyConstants.PROX_ALERT_FLAG);
             //registerReceiver(new ProximityIntentReceiver(), filter);
             Toast.makeText(getApplicationContext(), "Alert Added", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void attemptToRestartProximityAlert(Context ctx){
+
+        String stringLocation = FileIO.getLocationFromFile(ctx);
+
+        if(!stringLocation.isEmpty()){
+            LocationManager locationManager =
+                    (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+
+            LatLng latLng = convertStringToLatLng(stringLocation);
+
+            Intent intent = new Intent(ctx, ProximityIntentReceiver.class);
+            PendingIntent proximityIntent = PendingIntent.getBroadcast(ctx, 0, intent,
+                                                                 PendingIntent.FLAG_CANCEL_CURRENT);
+
+            if ( ContextCompat.checkSelfPermission(ctx,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                                                               PackageManager.PERMISSION_GRANTED ) {
+                locationManager.addProximityAlert(
+                        latLng.latitude, // the latitude of the central point of the alert region
+                        latLng.longitude, // the longitude of the central point of the alert region
+                        MyConstants.POINT_RADIUS, // the radius of the central point of the alert region, in meters
+                        MyConstants.PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
+                        proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
+                );
+
+                //IntentFilter filter = new IntentFilter(MyConstants.PROX_ALERT_FLAG);
+                //registerReceiver(new ProximityIntentReceiver(), filter);
+                Toast.makeText(ctx.getApplicationContext(), "Proximity Alert Restarted", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(ctx.getApplicationContext(),
+                               "Proximity Alert Was not able to restart",
+                               Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+
+            Toast.makeText(ctx.getApplicationContext(),
+                           "Location not set in QRAlarm App",
+                           Toast.LENGTH_SHORT).show();
         }
     }
 

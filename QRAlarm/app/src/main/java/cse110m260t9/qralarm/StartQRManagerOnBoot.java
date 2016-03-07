@@ -12,6 +12,8 @@ public class StartQRManagerOnBoot extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
             QRAlarmManager.reloadAlarms(context);
+
+            MapsActivity.attemptToRestartProximityAlert(context);
         }
     }
 
