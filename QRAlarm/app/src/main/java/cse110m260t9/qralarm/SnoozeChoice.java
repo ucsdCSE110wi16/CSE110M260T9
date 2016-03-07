@@ -18,7 +18,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
  */
 public class SnoozeChoice extends AppCompatActivity {
 
-
+    GifView gifView;
     public static Ringtone ringtone;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -31,6 +31,7 @@ public class SnoozeChoice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.snoozechoice);
+        gifView = (GifView)findViewById(R.id.gif_view);
         //initiate ringtone
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(this, uri);
@@ -123,4 +124,8 @@ public class SnoozeChoice extends AppCompatActivity {
         AppIndex.AppIndexApi.end(mClient, viewAction);
         mClient.disconnect();
     }
+
+    @Override
+    public void onBackPressed() {}
+
 }
