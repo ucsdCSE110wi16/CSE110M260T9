@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     for (long l : alarm.broadcastTimes) {
                         PendingIntent pi = PendingIntent.getBroadcast(
-                                MainActivity.this, (int) (l % Integer.MAX_VALUE), new Intent(MainActivity.this, AlarmReceiver.class), 0);
+                                MainActivity.this, (int) l % Integer.MAX_VALUE, new Intent(MainActivity.this, AlarmReceiver.class), 0);
                         AlarmManager alarmManager = (AlarmManager) MainActivity.this.getSystemService(Context.ALARM_SERVICE);
                         alarmManager.cancel(pi);
                         relativeLayout.removeView(v);
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private RelativeLayout.LayoutParams getNewParams() {
         return new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
 
