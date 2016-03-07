@@ -42,29 +42,23 @@ public class SnoozeChoice extends AppCompatActivity {
         Button b2 = (Button) findViewById(R.id.button2);
 
         if(MainActivity.IsAtHome()) {
-
             b1.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     Intent turnItOff = new Intent(SnoozeChoice.this, QRScannerActivity.class);
-
                     SnoozeChoice.this.startActivity(turnItOff);
-
                 }
             });
         } else {
 
             b1.setText(R.string.turn_off_alarm);
-
             b1.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     ringtone.stop();
-
                     startActivity(new Intent(SnoozeChoice.this, MainActivity.class));
-
                 }
             });
         }

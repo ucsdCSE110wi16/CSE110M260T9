@@ -265,15 +265,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setIsAtHome(boolean bool){
-
         isAtHome = bool;
-
     }
 
     public static boolean IsAtHome(){
-
         return isAtHome;
-
     }
 
 }

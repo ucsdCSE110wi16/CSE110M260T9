@@ -18,6 +18,8 @@ import android.support.test.uiautomator.Until;
 
 import java.util.Calendar;
 
+import dalvik.annotation.TestTarget;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -64,14 +66,25 @@ public class UIAutomatorTest {
 
     @Test
     public void testClickNewAlarm() {
-        waitForID(newAlarmButtonID);
-        clickNewAlarm();
-        waitForID(saveAlarmButtonID);
-        clickNextMinutes();
-        clickSave();
+        createAlarmNMinutesFromNow(1);
+        turnOffAlarm();
+    }
+
+
+
+    private void turnOffAlarm() {
         waitForID(turnAlarmOffID);
         clickTurnOffAlarm();
         waitForID(newAlarmButtonID);
+    }
+
+    private void createAlarmNMinutesFromNow( int n ) {
+        waitForID(newAlarmButtonID);
+        clickNewAlarm();
+        waitForID(saveAlarmButtonID);
+        for( int i = 1; i <= n; i++ )
+            clickNextMinutes(i);
+        clickSave();
     }
 
 
@@ -85,8 +98,8 @@ public class UIAutomatorTest {
        clickButton(okButton);
     }
 
-    private void clickNextMinutes() {
-        Integer nextMinutes = Calendar.getInstance().get(Calendar.MINUTE) + 1;
+    private void clickNextMinutes(int i) {
+        Integer nextMinutes = Calendar.getInstance().get(Calendar.MINUTE) + i;
         UiObject nextMinButton = mDevice.findObject(new UiSelector()
                 .packageName(CSE110M260T9_QRALARM)
                 .className("android.widget.Button")
@@ -99,6 +112,7 @@ public class UIAutomatorTest {
                 .text("Save"));
         clickButton(saveButton);
     }
+
     private void clickTurnOffAlarm() {
         UiObject turnOffAlarm = mDevice.findObject(new UiSelector()
                 .resourceId(turnAlarmOffID));
