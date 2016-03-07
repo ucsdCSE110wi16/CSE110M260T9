@@ -26,8 +26,7 @@ public class AlarmIO {
         ArrayList<Alarm> alarms = new ArrayList<>();
         for(File f : files ) {
             Alarm alm = loadAlarm(ctx, f);
-            System.out.println("Calendar list size: " + alm.getAlarmAsCalendarList().size());
-            if( alm.getAlarmAsCalendarList().size() > 0)
+            if( alm.getAlarmAsCalendarList() != null && alm.getAlarmAsCalendarList().size() > 0)
                 alarms.add(alm);
         }
         return alarms;
@@ -64,5 +63,11 @@ public class AlarmIO {
         File alarmDir = new File(ctx.getFilesDir(), ALARMSDIR );
         alarmDir.mkdirs();
         return alarmDir;
+    }
+
+    public static void deleteAlarm( Context ctx, Alarm alm) {
+        File alarmDir = getAlarmsDir(ctx);
+        File f = new File(alarmDir, alm.getDateAndTimeSet() + EXT );
+        f.delete();
     }
 }
