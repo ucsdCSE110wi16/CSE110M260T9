@@ -105,8 +105,6 @@ Priority 1 1 Day</del>
 #####TDD
 <del>Alarm</del><br>
 AlarmIO<br>
-QRScannerActivity<br>
-MapsActivity<br>
 
 
 #####BDD (via UIAutomator)

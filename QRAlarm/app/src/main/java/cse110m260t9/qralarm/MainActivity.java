@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
             textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
             textView.setText(alarm.toString());
+            relativeLayout.addView(textView);
         }
     }
 
