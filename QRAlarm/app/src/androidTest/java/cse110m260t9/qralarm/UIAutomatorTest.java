@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiObject;
@@ -63,6 +64,8 @@ public class UIAutomatorTest {
         clickNewAlarm();
         clickNextMinutes();
         clickSave();
+        mDevice.wait(Until.findObject(By.text("TURN OFF ALARM")), 60 * 2000);
+        clickTurnOffAlarm();
     }
 
     private void clickNewAlarm() {
@@ -85,6 +88,11 @@ public class UIAutomatorTest {
         UiObject saveButton = mDevice.findObject(new UiSelector()
                 .text("Save"));
         clickButton(saveButton);
+    }
+    private void clickTurnOffAlarm() {
+        UiObject turnOffAlarm = mDevice.findObject(new UiSelector()
+                .text("Turn off Alarm"));
+        clickButton(turnOffAlarm);
     }
 
     private void clickButton(UiObject button) {
