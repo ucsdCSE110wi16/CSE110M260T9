@@ -2,6 +2,9 @@ package cse110m260t9.qralarm;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -88,12 +91,24 @@ public class MainActivity extends AppCompatActivity {
             RelativeLayout.LayoutParams rules = getNewParams();
             if( previousView != null )
                 rules.addRule(RelativeLayout.BELOW, i-1);
-            TextView textView = new TextView(this);
-            textView.setLayoutParams(rules);
-            textView.setText(alarms.get(i).toString() + "\n");
-            textView.setId(i);
-            previousView = textView;
-            relativeLayout.addView(textView);
+            Button button = new Button(this);
+            button.setLayoutParams(rules);
+            final Alarm alarm = this.alarms.get(i);
+            button.setText(alarm.toString());
+            button.setId(i);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (long l : alarm.broadcastTimes) {
+                        PendingIntent pi = PendingIntent.getBroadcast(
+                                MainActivity.this, (int)(l % Integer.MAX_VALUE), new Intent(MainActivity.this, AlarmReceiver.class), 0);
+                        AlarmManager alarmManager = (AlarmManager)MainActivity.this.getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.cancel(pi);
+                    }
+                }
+            });
+            previousView = button;
+            relativeLayout.addView(button);
         }
     }
     private RelativeLayout.LayoutParams getNewParams() {
