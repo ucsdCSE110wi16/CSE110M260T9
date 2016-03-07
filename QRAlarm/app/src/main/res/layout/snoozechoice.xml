@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-              tools.context
+
+
+    <cse110m260t9.qralarm.GifView
+        android:id="@+id/gif_view"
+        android:layout_width="396dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="142dp"
         android:text="Scan QR Code"
         android:id="@+id/turnAlarmOff"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal|top"
+        android:textSize="25dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="396dp"
+        android:layout_height="142dp"
         android:text="Snooze"
         android:id="@+id/button2"
-        android:layout_gravity="center_horizontal"/>
-</LinearLayout>
+        android:layout_gravity="center_horizontal|bottom"
+        android:textSize="25dp" />
+</FrameLayout>
