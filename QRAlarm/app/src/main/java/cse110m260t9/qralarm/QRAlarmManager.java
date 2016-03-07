@@ -136,7 +136,7 @@ public class QRAlarmManager extends IntentService{
         System.out.println("Registering alarm: ");
         System.out.println(time);
         long triggerAtMillis = time.getTimeInMillis();
-        int broadCastID = (int) triggerAtMillis % Integer.MAX_VALUE;
+        int broadCastID = (int) (triggerAtMillis % Integer.MAX_VALUE);
         PendingIntent operation = PendingIntent.getBroadcast(
                 ctx, broadCastID, new Intent(ctx, AlarmReceiver.class), 0);
         AlarmManager alarmManager = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
