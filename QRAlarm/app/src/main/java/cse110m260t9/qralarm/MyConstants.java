@@ -20,6 +20,9 @@ public abstract class MyConstants {
     public final static String ALARM_SAVED_STR = "Alarm saved";
     public final static String PROX_ALERT_FLAG = "Proximity Alert flag";
     public final static String IS_IN_PROX_FILE = "Is_In_Proximity_File";
+    public final static long MINIMUM_TIME_BETWEEN_UPDATE = 1000; // in Milliseconds
+    public final static long POINT_RADIUS = 25; // in Meters
+    public final static long PROX_ALERT_EXPIRATION = -1; // It will never expire
 
     public final static int NEW_ALARM_ACTIVITY = 0xF1;
     public final static int LOCATION_SUCCESSFULLY_SET = 0x20;

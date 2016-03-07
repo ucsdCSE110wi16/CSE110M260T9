@@ -43,22 +43,19 @@ public class EditAlarm extends AppCompatActivity {
         }
     }
 
-
-
     public void cancelAlarm(View v) {
+        this.setResult(Activity.RESULT_CANCELED);
         this.finish();
     }
 
     public void saveAlarm(View v) {
-
         Alarm alarm = createAlarmFromUserInput(v);
-        System.out.println(alarm);
         QRAlarmManager.registerAlarm(this,alarm);
-
 
         // Return to the MainActivity
         Intent returnIntent = new Intent(this, MainActivity.class);
-        setResult(MyConstants.NEW_ALARM_SUCCESSFULLY_SET, returnIntent);
+        returnIntent.putExtra("Alarm", alarm.getSerializedBytes());
+        this.setResult(Activity.RESULT_OK, returnIntent);
         this.finish();
     }
 
