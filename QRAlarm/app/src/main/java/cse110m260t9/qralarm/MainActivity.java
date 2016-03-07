@@ -24,6 +24,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         //QRAlarmManager.reloadAlarms(this);
         displayAlarms();
+        System.out.println("Today's Calendar is " + Calendar.getInstance());
     }
 
     private void displayAlarms() {
