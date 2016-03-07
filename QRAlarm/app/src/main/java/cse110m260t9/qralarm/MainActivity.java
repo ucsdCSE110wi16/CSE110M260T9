@@ -68,20 +68,31 @@ public class MainActivity extends AppCompatActivity {
 
         initNavDrawer();
 
-        QRAlarmManager.reloadAlarms(this);
-        this.alarms = AlarmIO.getAllAlarms(this);
-        this.displayAlarms();
+        //QRAlarmManager.reloadAlarms(this);
+        displayAlarms();
     }
 
     private void displayAlarms() {
+        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(this);
         RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
-        for(Alarm alarm : this.alarms) {
+        View previousView = null;
+        System.out.println("Alarm list size: " + alarms.size());
+        for(int i = 0; i < alarms.size(); i++) {
+            RelativeLayout.LayoutParams rules = getNewParams();
+            if( previousView != null )
+                rules.addRule(RelativeLayout.BELOW, i-1);
             TextView textView = new TextView(this);
-            textView.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-            textView.setText(alarm.toString());
+            textView.setLayoutParams(rules);
+            textView.setText(alarms.get(i).toString());
+            textView.setId(i);
+            previousView = textView;
             relativeLayout.addView(textView);
         }
+    }
+    private RelativeLayout.LayoutParams getNewParams() {
+        return new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
