@@ -1,7 +1,9 @@
 package cse110m260t9.qralarm;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
         initNavDrawer();
 
         //QRAlarmManager.reloadAlarms(this);
-        displayAlarms();
+        this.alarms = AlarmIO.getAllAlarms(this);
+        this.displayAlarms();
         System.out.println("Today's Calendar is " + Calendar.getInstance());
     }
 
     private void displayAlarms() {
-        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(this);
         RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
         View previousView = null;
         System.out.println("Alarm list size: " + alarms.size());
@@ -187,18 +189,22 @@ public class MainActivity extends AppCompatActivity {
 
         //when we return from maps when we set a new location, we check to see if it returned
         //a code of 1...
+        switch (requestCode) {
+            case MyConstants.NEW_ALARM_ACTIVITY:
+                if (resultCode == Activity.RESULT_OK) {
+                    byte[] byteArray = data.getByteArrayExtra("Alarm");
+                    this.alarms.add(Alarm.fromSerializedBytes(byteArray));
+                    this.displayAlarms();
+                }
+                break;
+        }
         switch (resultCode) {
             case MyConstants.LOCATION_SUCCESSFULLY_SET:
                 //store the string of this new location
                 stringLocation = data.getStringExtra(MyConstants.CURR_LOCATION);
                 FileIO.writeLocationToFile(stringLocation, this);
                 break;
-            case MyConstants.NEW_ALARM_SUCCESSFULLY_SET:
-                Toast.makeText(MainActivity.this,
-                        MyConstants.ALARM_SAVED_STR, Toast.LENGTH_SHORT).show();
-                break;
         }
-        //System.out.println("Inside onActivityResult -- Result Code: " + resultCode);
     }
 
     public void initNavDrawer(){
