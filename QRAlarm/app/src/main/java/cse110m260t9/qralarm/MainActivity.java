@@ -1,7 +1,9 @@
 package cse110m260t9.qralarm;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Alarm> alarms;
 
+    private RelativeLayout mainLayout;
+
     //TEMPORARILY HERE
     private static boolean isAtHome = false;
 
@@ -68,14 +72,15 @@ public class MainActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         initNavDrawer();
+        mainLayout = (RelativeLayout)findViewById(R.id.mainActivityLayout);
 
         //QRAlarmManager.reloadAlarms(this);
-        displayAlarms();
+        this.alarms = AlarmIO.getAllAlarms(this);
+        this.displayAlarms();
         System.out.println("Today's Calendar is " + Calendar.getInstance());
     }
 
     private void displayAlarms() {
-        ArrayList<Alarm> alarms = AlarmIO.getAllAlarms(this);
         RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
         View previousView = null;
         System.out.println("Alarm list size: " + alarms.size());
@@ -85,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 rules.addRule(RelativeLayout.BELOW, i-1);
             TextView textView = new TextView(this);
             textView.setLayoutParams(rules);
-            textView.setText(alarms.get(i).toString());
+            textView.setText(alarms.get(i).toString() + "\n");
             textView.setId(i);
             previousView = textView;
             relativeLayout.addView(textView);
@@ -187,18 +192,22 @@ public class MainActivity extends AppCompatActivity {
 
         //when we return from maps when we set a new location, we check to see if it returned
         //a code of 1...
+        switch (requestCode) {
+            case MyConstants.NEW_ALARM_ACTIVITY:
+                if (resultCode == Activity.RESULT_OK) {
+                    byte[] byteArray = data.getByteArrayExtra("Alarm");
+                    this.alarms.add(Alarm.fromSerializedBytes(byteArray));
+                    this.displayAlarms();
+                }
+                break;
+        }
         switch (resultCode) {
             case MyConstants.LOCATION_SUCCESSFULLY_SET:
                 //store the string of this new location
                 stringLocation = data.getStringExtra(MyConstants.CURR_LOCATION);
                 FileIO.writeLocationToFile(stringLocation, this);
                 break;
-            case MyConstants.NEW_ALARM_SUCCESSFULLY_SET:
-                Toast.makeText(MainActivity.this,
-                        MyConstants.ALARM_SAVED_STR, Toast.LENGTH_SHORT).show();
-                break;
         }
-        //System.out.println("Inside onActivityResult -- Result Code: " + resultCode);
     }
 
     public void initNavDrawer(){
@@ -273,13 +282,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
 
                 super.onDrawerOpened(drawerView);
+                swapIndex();
                 getSupportActionBar().setTitle("Options");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-
+                swapIndex();
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -296,6 +306,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean IsAtHome(){
         return isAtHome;
+    }
+
+    private void swapIndex() {
+        View view = mainLayout.getChildAt(1);
+        mainLayout.removeView(view);
+        mainLayout.addView(view);
     }
 
 }

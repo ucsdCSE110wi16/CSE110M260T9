@@ -221,19 +221,19 @@ public class Alarm implements Serializable{
         rv += "\nDays: [ ";
         for(Integer day : daysAlarmShouldFire ) {
             switch (day) {
-                case 1: rv += "Sunday ";
+                case 1: rv += "S ";
                     break;
-                case 2: rv += "Monday ";
+                case 2: rv += "M ";
                     break;
-                case 3: rv += "Tuesday ";
+                case 3: rv += "T ";
                     break;
-                case 4: rv += "Wednesday ";
+                case 4: rv += "W ";
                     break;
-                case 5: rv += "Thursday ";
+                case 5: rv += "Th ";
                     break;
-                case 6: rv += "Friday ";
+                case 6: rv += "F ";
                     break;
-                case 7: rv += "Saturday ";
+                case 7: rv += "S ";
                     break;
             }
         }
@@ -244,9 +244,9 @@ public class Alarm implements Serializable{
         String month = String.format("%02d",alarmTime.get(alarmTime.MONTH));
         String day = String.format("%02d",alarmTime.get(alarmTime.DAY_OF_MONTH));
         rv += "Time: " + hours + ":" + minutes;
-        rv += "\nRepeats: " + isRepeating;
-        rv += "\nDate Alarm was Set: " + year + "/" + month + "/" + day;
-        rv += "\n Condensed: " + getDateAndTimeSet();
+        rv += "        Repeats: " + isRepeating;
+        rv += "\nDate Alarm was set: " + year + "/" + month + "/" + day;
+        //rv += "\n Condensed: " + getDateAndTimeSet();
         return rv;
     }
 }
