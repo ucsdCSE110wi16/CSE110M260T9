@@ -97,12 +97,14 @@ Priority 1 3 Days</del>
 Get rid of the damn activity titles<br>
 Priority 3 1 Days
 
+<del>Make toast when pressing snooze, saying when the alarm will ring next<br>
+Priority 1 1 Day</del>
+
 ####Testing
 
 #####TDD
 <del>Alarm</del><br>
 AlarmIO<br>
-QRScannerActivity<br>
 QRScannerActivity<br>
 MapsActivity<br>
 
