@@ -1,5 +1,6 @@
 package cse110m260t9.qralarm;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -10,13 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     //freak out)
     private String stringLocation;
 
+    private ArrayList<Alarm> alarms;
+
     //TEMPORARILY HERE
     private static boolean isAtHome = false;
 
@@ -60,6 +69,18 @@ public class MainActivity extends AppCompatActivity {
         initNavDrawer();
 
         QRAlarmManager.reloadAlarms(this);
+        this.alarms = AlarmIO.getAllAlarms(this);
+        this.displayAlarms();
+    }
+
+    private void displayAlarms() {
+        RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
+        for(Alarm alarm : this.alarms) {
+            TextView textView = new TextView(this);
+            textView.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+            textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+            textView.setText(alarm.toString());
+        }
     }
 
     @Override
@@ -103,15 +124,6 @@ public class MainActivity extends AppCompatActivity {
     public void newAlarm(View v) {
         this.startActivityForResult(new Intent(this, EditAlarm.class), MyConstants.NEW_ALARM_ACTIVITY);
     }
-
-    /**public void clearAlarms(View v) {
-        QRAlarmManager.clearAllAlarms(this);
-    }
-
-    //public void saveInFolder(View v ) {
-        QRAlarmManager.registerSavedAlarm(this);
-    }*/
-
 
     @Override
     public void onStart() {
