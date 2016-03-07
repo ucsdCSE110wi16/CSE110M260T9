@@ -21,4 +21,5 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="alarm_saved">Alarm saved</string>
+    <string name="turn_off_alarm">Turn off alarm</string>
 </resources>

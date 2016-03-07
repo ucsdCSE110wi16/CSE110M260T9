@@ -38,7 +38,7 @@ public class SnoozeChoice extends AppCompatActivity {
         ringtone = RingtoneManager.getRingtone(this, uri);
         ringtone.play();
 
-        Button b1 = (Button) findViewById(R.id.button);
+        Button b1 = (Button) findViewById(R.id.turnAlarmOff);
         Button b2 = (Button) findViewById(R.id.button2);
 
         if(MainActivity.IsAtHome()) {
@@ -55,7 +55,7 @@ public class SnoozeChoice extends AppCompatActivity {
             });
         } else {
 
-            b1.setText("Turn off Alarm");
+            b1.setText(R.string.turn_off_alarm);
 
             b1.setOnClickListener(new View.OnClickListener() {
 

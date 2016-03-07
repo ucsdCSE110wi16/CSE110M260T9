@@ -28,9 +28,12 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class UIAutomatorTest {
     private static final String CSE110M260T9_QRALARM
             = "cse110m260t9.qralarm";
-    private static final int LAUNCH_TIMEOUT = 5000;
-    private static final String STRING_TO_BE_TYPED = "UiAutomator";
+    private static final int LAUNCH_TIMEOUT = 2000;
     private UiDevice mDevice;
+    private static final String turnAlarmOffID = "cse110m260t9.qralarm:id/turnAlarmOff";
+    private static final String newAlarmButtonID = "cse110m260t9.qralarm:id/newAlarmButton";
+    private static final String saveAlarmButtonID = "cse110m260t9.qralarm:id/saveButtonAlarm";
+
 
     @Before
     public void startMainActivityFromHomeScreen() {
@@ -61,16 +64,23 @@ public class UIAutomatorTest {
 
     @Test
     public void testClickNewAlarm() {
+        waitForID(newAlarmButtonID);
         clickNewAlarm();
+        waitForID(saveAlarmButtonID);
         clickNextMinutes();
         clickSave();
-        mDevice.wait(Until.findObject(By.text("TURN OFF ALARM")), 60 * 2000);
+        waitForID(turnAlarmOffID);
         clickTurnOffAlarm();
+        waitForID(newAlarmButtonID);
     }
 
+
+    private void waitForID( String id ) {
+        mDevice.wait(Until.findObject(By.res(id)), 60 * 2000);
+    }
     private void clickNewAlarm() {
         UiObject okButton = mDevice.findObject(new UiSelector()
-                .text("New Alarm"));
+                .resourceId(newAlarmButtonID));
         // Simulate a user-click on the OK button, if found.
        clickButton(okButton);
     }
@@ -91,7 +101,7 @@ public class UIAutomatorTest {
     }
     private void clickTurnOffAlarm() {
         UiObject turnOffAlarm = mDevice.findObject(new UiSelector()
-                .text("Turn off Alarm"));
+                .resourceId(turnAlarmOffID));
         clickButton(turnOffAlarm);
     }
 
