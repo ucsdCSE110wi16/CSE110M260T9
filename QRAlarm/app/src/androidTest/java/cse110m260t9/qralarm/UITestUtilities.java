@@ -27,11 +27,13 @@ public class UITestUtilities {
             = "cse110m260t9.qralarm";
     private static final int LAUNCH_TIMEOUT = 2000;
     private static UiDevice mDevice;
-    private static final String turnAlarmOffID = "cse110m260t9.qralarm:id/turnAlarmOff";
-    private static final String newAlarmButtonID = "cse110m260t9.qralarm:id/newAlarmButton";
-    private static final String saveAlarmButtonID = "cse110m260t9.qralarm:id/saveButtonAlarm";
-    private static final String mainPageNavList = "cse110m260t9.qralarm:id/navList";
-    private static final String mapsYes = "cse110m260t9.qralarm:id/buttonYes";
+
+    public static final String turnAlarmOffID = "cse110m260t9.qralarm:id/turnAlarmOff";
+    public static final String newAlarmButtonID = "cse110m260t9.qralarm:id/newAlarmButton";
+    public static final String saveAlarmButtonID = "cse110m260t9.qralarm:id/saveButtonAlarm";
+    public static final String mainPageNavList = "cse110m260t9.qralarm:id/navList";
+    public static final String mapsYes = "cse110m260t9.qralarm:id/buttonYes";
+
 
 
     public static void startMainActivityFromHomeScreen(UiDevice device) {
@@ -117,11 +119,14 @@ public class UITestUtilities {
     }
 
     public static void setHomeLocation(){
-        mDevice.click(5,5);
-        Log.i("yes", "hello");
+        waitForID(newAlarmButtonID);
+        mDevice.click(80, 165); //navbar click
+        android.os.SystemClock.sleep(500);
+        mDevice.click(200, 300); //"set home location" click
+        waitForID(mapsYes);
         UiObject yes = mDevice.findObject(new UiSelector()
                 .resourceId(mapsYes));
         clickButton(yes);
-        Log.i("yes", "hello1");
     }
+
 }
