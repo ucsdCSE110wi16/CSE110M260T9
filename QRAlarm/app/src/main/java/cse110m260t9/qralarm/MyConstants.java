@@ -24,5 +24,7 @@ public abstract class MyConstants {
     public final static int LOCATION_SUCCESSFULLY_SET = 0x20;
     public final static int NEW_ALARM_SUCCESSFULLY_SET = 0x21;
 
+    public final static int SNOOZE_TIME = 5*60000; //5 minutes
+    public final static String SNOOZE_TIME_STR = "5:00";
 
 }

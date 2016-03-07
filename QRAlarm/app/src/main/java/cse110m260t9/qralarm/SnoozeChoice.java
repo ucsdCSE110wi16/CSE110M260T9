@@ -6,8 +6,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -67,6 +69,7 @@ public class SnoozeChoice extends AppCompatActivity {
             });
         }
 
+
         b2.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -75,6 +78,11 @@ public class SnoozeChoice extends AppCompatActivity {
                 bro.goSnooze(SnoozeChoice.this);
                 Intent goBack = new Intent(SnoozeChoice.this, MainActivity.class);
                 ringtone.stop();
+
+                String snoozeToastText = "Snoozing: " + MyConstants.SNOOZE_TIME_STR + " remaining";
+                Log.i("snoozeTag", "Location services connected.");
+                Toast.makeText(SnoozeChoice.this,
+                        snoozeToastText, Toast.LENGTH_SHORT).show();
                 SnoozeChoice.this.startActivity(goBack);
             }
         });
