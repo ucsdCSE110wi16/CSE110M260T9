@@ -77,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
         initNavDrawer();
         mainLayout = (RelativeLayout)findViewById(R.id.mainActivityLayout);
 
-        //QRAlarmManager.reloadAlarms(this);
         this.alarms = AlarmIO.getAllAlarms(this);
         this.displayAlarms();
         System.out.println("Today's Calendar is " + Calendar.getInstance());
     }
 
     private void displayAlarms() {
-        RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
+        final RelativeLayout relativeLayout = (RelativeLayout)this.findViewById(R.id.rlAlarmList);
+        relativeLayout.removeAllViews();
         View previousView = null;
         System.out.println("Alarm list size: " + alarms.size());
         for(int i = 0; i < alarms.size(); i++) {
@@ -92,21 +92,24 @@ public class MainActivity extends AppCompatActivity {
             if( previousView != null )
                 rules.addRule(RelativeLayout.BELOW, i-1);
             Button button = new Button(this);
-            button.setLayoutParams(rules);
+            final View v = button;
             final Alarm alarm = this.alarms.get(i);
-            button.setText(alarm.toString());
-            button.setId(i);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     for (long l : alarm.broadcastTimes) {
                         PendingIntent pi = PendingIntent.getBroadcast(
-                                MainActivity.this, (int)(l % Integer.MAX_VALUE), new Intent(MainActivity.this, AlarmReceiver.class), 0);
-                        AlarmManager alarmManager = (AlarmManager)MainActivity.this.getSystemService(Context.ALARM_SERVICE);
+                                MainActivity.this, (int) (l % Integer.MAX_VALUE), new Intent(MainActivity.this, AlarmReceiver.class), 0);
+                        AlarmManager alarmManager = (AlarmManager) MainActivity.this.getSystemService(Context.ALARM_SERVICE);
                         alarmManager.cancel(pi);
+                        relativeLayout.removeView(v);
+                        AlarmIO.deleteAlarm(MainActivity.this,alarm);
                     }
                 }
             });
+            button.setLayoutParams(rules);
+            button.setText(alarm.toString());
+            button.setId(i);
             previousView = button;
             relativeLayout.addView(button);
         }
