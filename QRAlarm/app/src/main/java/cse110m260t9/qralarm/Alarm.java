@@ -221,19 +221,19 @@ public class Alarm implements Serializable{
         rv += "\nDays: [ ";
         for(Integer day : daysAlarmShouldFire ) {
             switch (day) {
-                case 1: rv += "S ";
+                case 1: rv += "Sun ";
                     break;
-                case 2: rv += "M ";
+                case 2: rv += "Mon ";
                     break;
-                case 3: rv += "T ";
+                case 3: rv += "Tues ";
                     break;
-                case 4: rv += "W ";
+                case 4: rv += "Wed ";
                     break;
-                case 5: rv += "Th ";
+                case 5: rv += "Thurs ";
                     break;
-                case 6: rv += "F ";
+                case 6: rv += "Fri ";
                     break;
-                case 7: rv += "S ";
+                case 7: rv += "Sat ";
                     break;
             }
         }
