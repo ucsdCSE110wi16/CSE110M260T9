@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Alarm> alarms;
 
+    private RelativeLayout mainLayout;
+
     //TEMPORARILY HERE
     private static boolean isAtHome = false;
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         initNavDrawer();
+        mainLayout = (RelativeLayout)findViewById(R.id.mainActivityLayout);
 
         //QRAlarmManager.reloadAlarms(this);
         displayAlarms();
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 rules.addRule(RelativeLayout.BELOW, i-1);
             TextView textView = new TextView(this);
             textView.setLayoutParams(rules);
-            textView.setText(alarms.get(i).toString());
+            textView.setText(alarms.get(i).toString() + "\n");
             textView.setId(i);
             previousView = textView;
             relativeLayout.addView(textView);
@@ -273,13 +276,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
 
                 super.onDrawerOpened(drawerView);
+                swapIndex();
                 getSupportActionBar().setTitle("Options");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-
+                swapIndex();
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(mActivityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -296,6 +300,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean IsAtHome(){
         return isAtHome;
+    }
+
+    private void swapIndex() {
+        View view = mainLayout.getChildAt(1);
+        mainLayout.removeView(view);
+        mainLayout.addView(view);
     }
 
 }
