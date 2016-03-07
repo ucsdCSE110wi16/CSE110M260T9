@@ -104,13 +104,13 @@ Priority 1 1 Day</del>
 
 #####TDD
 <del>Alarm</del><br>
-AlarmIO<br>
+<del>AlarmIO</del><br>
 
 
 #####BDD (via UIAutomator)
-<del>Given that you open app, when you set a new alarm for 1 minute later, then alarm will ring and I can shut it off<br></del>
+<del>Given that you open app, when you set a new alarm for 1 minute later, then alarm will ring and I can shut it off</del><br>
 
-Given that the phone screen is off, the alarm will ring and wake up the phone<br>
+<del>Given that the phone screen is off, the alarm will ring and wake up the phone</del><br>
 
 Given that you are in the home location, the alarm will use the QR Code<br>
 
